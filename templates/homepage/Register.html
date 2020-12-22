@@ -1,0 +1,33 @@
+{% extends 'homepage/Base.html' %}
+{% block title %}
+<title>Register</title>
+{% endblock %}
+{% load crispy_forms_filters %}
+{% block content %}
+    <div class="container mt-5 jumbotron pt-3 w-25 bg-light pb-3">
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="">
+                <div class="content-section">
+                    <form action="#" method="POST">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            <legend class="border-bottom mb-3">Đăng kí</legend>
+                            {{ form|crispy }}
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="btn btn-outline-primary mb-2" type="submit">Đăng kí</button>
+                        </div>
+                    </form>
+                    <div class="border-top pt-3">
+                        <small class="text-muted">
+                            Đã có tài khoản? <a href="{% url 'login' %}">Đăng nhập</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

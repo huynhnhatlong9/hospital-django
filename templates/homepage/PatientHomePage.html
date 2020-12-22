@@ -1,0 +1,255 @@
+{% extends 'homepage/Base.html' %}
+{% block title %}
+    <title>Patient</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <!-- Yeu cau 1 -->
+            <div class="col-sm">
+                <div>
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Yêu cầu 1</h5>
+                            <p class="card-text" style="text-overflow: ellipsis;
+                                word-wrap: break-word;
+                                overflow: hidden;
+                                min-height: 3.6em;
+                                max-height: 3.6em;
+                                line-height: 1.8em;">Cập nhật thông tin nhân khẩu học và thông tin bảo hiểm y tế.</p>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#yeucau1">
+                                Cập nhật
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="yeucau1" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Cập nhật thông tin</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h5 class="text-primary">Thông Tin Nhân Khẩu</h5>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Họ" id="ho">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Tên" id="ten">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="number" min="0"
+                                           onkeyup="if(this.value<0){this.value= 0} else if (this.value>200) {this.value=200}"
+                                           class="form-control" placeholder="Tuổi" id="tuoi">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Dân Tộc" id="dantoc">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Nghề Ngiệp" id="nghenghiep">
+                                </div>
+                                <h5 class="text-primary">Thông Tin Bảo Hiểm</h5>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Mã Thẻ" id="mathe">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="date" class="form-control" placeholder="Thời Gian" id="tgdk">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Nơi Đăng Kí" id="noidangki">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                                <button type="button" class="btn btn-primary" id="submit1">Cật Nhật</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Modal -->
+            </div>
+            <!-- Yeu cau 2 -->
+            <div class="col-sm">
+                <div>
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Yêu cầu 2</h5>
+                            <p class="card-text" style="text-overflow: ellipsis;
+                                word-wrap: break-word;
+                                overflow: hidden;
+                                min-height: 3.6em;
+                                max-height: 3.6em;
+                                line-height: 1.8em;">Xem danh sách các thuốc mà mình đã dùng trong lần điều trị gần
+                                nhất.</p>
+                            <a id="submit2" class="btn btn-primary">Xem</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Yeu cau 3-->
+            <div class="col-sm">
+                <div>
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Yêu cầu 3</h5>
+                            <p class="card-text" style="text-overflow: ellipsis;
+                                word-wrap: break-word;
+                                overflow: hidden;
+                                min-height: 3.6em;
+                                max-height: 3.6em;
+                                line-height: 1.8em;">Xem danh sách các thuốc mà mình đã dùng trong tất cả các lần điều
+                                trị.</p>
+                            <a href="#" class="btn btn-primary">Xem</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Yeu cau 4 -->
+            <div class="col-sm">
+                <div>
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Yêu cầu 4</h5>
+                            <p class="card-text" style="text-overflow: ellipsis;
+                                word-wrap: break-word;
+                                overflow: hidden;
+                                min-height: 3.6em;
+                                max-height: 3.6em;
+                                line-height: 1.8em;">
+                                Xem kết quả xét nghiệm trong lần điều trị gần nhất.</p>
+                            <a href="#" class="btn btn-primary">Xem</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Yeu cau 5 -->
+            <div class="col-sm">
+                <div>
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Yêu cầu 5</h5>
+                            <p class="card-text" style="text-overflow: ellipsis;
+                                word-wrap: break-word;
+                                overflow: hidden;
+                                min-height: 3.6em;
+                                max-height: 3.6em;
+                                line-height: 1.8em;">
+                                Xem danh sách tất cả các xét nghiệm mà mình đã làm.</p>
+                            <a href="#" class="btn btn-primary">Xem</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Yeu cau 6 -->
+            <div class="col-sm">
+                <div>
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Yêu cầu 6</h5>
+                            <p class="card-text" style="text-overflow: ellipsis;
+                                word-wrap: break-word;
+                                overflow: hidden;
+                                min-height: 3.6em;
+                                max-height: 3.6em;
+                                line-height: 1.8em;">
+                                Xem danh sách tất cả các xét nghiệm có ghi chú “bất thường” của một chỉ số xét nghiệm mà
+                                mình đã làm.</p>
+                            <a href="#" class="btn btn-primary">Xem</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Yeu cau 7 -->
+            <div class="col-sm">
+                <div>
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Yêu cầu 4</h5>
+                            <p class="card-text" style="text-overflow: ellipsis;
+                                word-wrap: break-word;
+                                overflow: hidden;
+                                min-height: 3.6em;
+                                max-height: 3.6em;
+                                line-height: 1.8em;">
+                                Xem kết quả xét nghiệm trong lần điều trị gần nhất.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Yeu cau 8 -->
+            <div class="col-sm">
+                <div>
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text" style="text-overflow: ellipsis;
+                                word-wrap: break-word;
+                                overflow: hidden;
+                                min-height: 3.6em;
+                                max-height: 3.6em;
+                                line-height: 1.8em;">
+                                Some quick example text to build on the card title and make up the bulk
+                                of the
+                                card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Yeu cau 9 -->
+            <div class="col-sm">
+                <div>
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                             class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text" style="text-overflow: ellipsis;
+                                word-wrap: break-word;
+                                overflow: hidden;
+                                min-height: 3.6em;
+                                max-height: 3.6em;
+                                line-height: 1.8em;">Some quick example text to build on the card title and make up the
+                                bulk
+                                of the
+                                card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% load static %}
+    <script>var token = '{{csrf_token}}';</script>
+    <script src="{% static 'bootstrap/js/patient.js' %}"></script>
+{% endblock %}

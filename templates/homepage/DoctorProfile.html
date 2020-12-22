@@ -1,0 +1,34 @@
+{% extends 'homepage/Base.html' %}
+{% block title %}
+<title>Profile</title>
+{% endblock %}
+{% block content %}
+<div class="container jumbotron mt-3 pt-3 bg-light">
+        <fieldset class="border-bottom border-success mb-3">
+            <legend class="text-success">Thông Tin Bác Sĩ</legend>
+        </fieldset>
+        <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
+            <thead class="thead-inverse|thead-default table-bordered table-success">
+            <tr>
+                <th>Mã Bác Sĩ</th>
+                <th>Tên</th>
+                <th>Khoa</th>
+                <th>Chuyên Khoa</th>
+                <th>Lương</th>
+                <th>Ca làm việc</th>
+                <th>Kinh Nghiệm</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for key,value in info.items %}
+                    <td scope="row">{{ value }}</td>
+                    {% endfor %}
+                </tr>
+
+            </tbody>
+        </table>
+
+
+    </div>
+{% endblock %}
