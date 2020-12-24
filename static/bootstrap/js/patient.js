@@ -50,7 +50,5 @@ $('#submit2').on('click', function (event) {
             toastr.error(data.responseJSON.error);
             // alert(data.responseJSON.error);
         }
-
     })
-    console.log(event)
 });

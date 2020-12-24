@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -39,6 +38,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'homepage',
     'account',
+    'django_js_reverse',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
@@ -109,7 +109,6 @@ DATABASES = {
         'PORT': '',
     },
 
-
 }
 
 # Password validation
@@ -145,10 +144,18 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
-STATIC_URL = 'static/'
-STATICFILES_DIRS = ['static']
+
+
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(BASE_DIR, 'staticfiles/'),
+)
+STATIC_ROOT = ''
+STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '')
 MEDIA_URL = '/media/'
-AUTH_USER_MODEL='account.Account'
-LOGIN_URL='/login/'
+AUTH_USER_MODEL = 'account.Account'
+LOGIN_URL = '/login/'
+JS_REVERSE_OUTPUT_PATH=os.path.join(BASE_DIR, 'staticfiles/')

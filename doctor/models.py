@@ -2,7 +2,6 @@ import json
 
 from django.db import models
 from django.db import connections
-import itertools
 
 
 # Create your models here.
@@ -22,11 +21,20 @@ def get_doctor_info(ssn):
     return data
 
 
-def proc_BS3(request):
-    date = json.loads(request.POST['info'])['ngaykham']
+def danhsachbenhnhan(request):
     with connections['doctor'].cursor() as cursor:
         try:
-            cursor.callproc('BS3', [date, request.user.ssn])
+            cursor.callproc('DANHSACHBENHNHAN', [request.user.ssn])
+            return cursor.fetchall()
+        except Exception as e:
+            print(e)
+
+
+def proc_BS3(ssn,ngaykham):
+
+    with connections['doctor'].cursor() as cursor:
+        try:
+            cursor.callproc('BS3', [ngaykham, ssn])
             return cursor.fetchall()
         except Exception as e:
             print(e)
