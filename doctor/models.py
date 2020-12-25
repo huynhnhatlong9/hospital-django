@@ -61,7 +61,6 @@ def thembenhnhan(request, data):
 
 # Thêm Bệnh Án
 def thembenhan(request, data):
-    print("check")
     with connections['doctor'].cursor() as cursor:
         try:
             cursor.callproc('CHINHSUA_BANT_NV',
@@ -70,9 +69,29 @@ def thembenhan(request, data):
                              data['sobuong']])
             return cursor.fetchall()
         except Exception as e:
-            print("okkk")
+            raise e
+#Thêm xét nghiệm
+def themxetnghiem(request,data):
+    with connections['doctor'].cursor() as cursor:
+        try:
+            cursor.callproc('CHINHSUA_XN',
+                            [data['maxetnghiem'], data['makham'], data['thoigianxetnghiem'],
+                             data['tenxetnghiem'],
+                             data['nhanxet']])
+            return cursor.fetchall()
+        except Exception as e:
             raise e
 
+def themphim(request,data):
+    with connections['doctor'].cursor() as cursor:
+        try:
+            cursor.callproc('CHINHSUA_PHIM',
+                            [data['maphim'], data['thoigianchup'],request.user.ssn, data['makham'],
+                             data['loaiphim'],
+                             data['nhanxet']])
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
 
 def proc_BS3(ssn, ngaykham):
     with connections['doctor'].cursor() as cursor:

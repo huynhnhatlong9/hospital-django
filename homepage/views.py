@@ -89,6 +89,27 @@ def homeView(request):
                     res = JsonResponse({'error': str(e)})
                     res.status_code = 403
                     return res
+            if request.POST['type']=='themxetnghiem':
+                try:
+                    doctor_model.themxetnghiem(request, json.loads(request.POST['data']))
+                    res = JsonResponse({"success": True})
+                    res.status_code = 200
+                    return res
+                except Exception as e:
+                    res = JsonResponse({'error': str(e)})
+                    res.status_code = 403
+                    return res
+            if request.POST['type']=='themphim':
+                try:
+                    doctor_model.themphim(request, json.loads(request.POST['data']))
+                    res = JsonResponse({"success": True})
+                    res.status_code = 200
+                    return res
+                except Exception as e:
+                    res = JsonResponse({'error': str(e)})
+                    res.status_code = 403
+                    return res
+
             if request.POST['type'] == 'BS3':
                 try:
                     data = doctor_model.proc_BS3(request)

@@ -2,7 +2,10 @@
 {% block title %}
     <title>Doctor</title>
 {% endblock %}
-
+{% block extraheader %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'patient/patient_detail.css' %}">
+{% endblock %}
 {% block content %}
     {#    <div class="container">#}
     {#        <div class="row">#}
@@ -166,21 +169,21 @@
     {##}
     {#    </div>#}
     <div class="container mt-2">
-        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target="#modal-dangkibenhnhan"><i
-                class="fa fa-plus"></i> Bệnh Nhân Đăng Kí
-        </button>
-        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target="#modal-them-benh-nhan"><i
-                class="fa fa-plus"></i> Thêm Bệnh Nhân
-        </button>
-        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target="#modal-thembenhan"><i
-                class="fa fa-plus"></i> Thêm Bệnh Án
-        </button>
-        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target=""><i
-                class="fa fa-plus"></i> Chụp Phim
-        </button>
-        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target=""><i
-                class="fa fa-plus"></i> Xét Nghiệm
-        </button>
+        {#        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target="#modal-dangkibenhnhan"><i#}
+        {#                class="fa fa-plus"></i> Bệnh Nhân Đăng Kí#}
+        {#        </button>#}
+        {#        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target="#modal-them-benh-nhan"><i#}
+        {#                class="fa fa-plus"></i> Thêm Bệnh Nhân#}
+        {#        </button>#}
+        {#        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target="#modal-thembenhan"><i#}
+        {#                class="fa fa-plus"></i> Thêm Bệnh Án#}
+        {#        </button>#}
+        {#        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target="#modal-chupphim"><i#}
+        {#                class="fa fa-plus"></i> Chụp Phim#}
+        {#        </button>#}
+        {#        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target="#modal-xetnghiem"><i#}
+        {#                class="fa fa-plus"></i> Xét Nghiệm#}
+        {#        </button>#}
         <!-- Modal -->
         <div class="modal fade" id="modal-them-benh-nhan" tabindex="-1" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -294,13 +297,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="input-group mb-3">
-                            <input type="datetime-local" class="form-control" placeholder="Thời Gian Nhập Viện" id="thoigiannhapvien">
+                            <input type="datetime-local" class="form-control" placeholder="Thời Gian Nhập Viện"
+                                   id="thoigiannhapvien">
                         </div>
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" placeholder="Mã Khoa" id="makhoa-thembenhan">
                         </div>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Mã Bệnh Nhân" id="mabenhnhan-thembenhan">
+                            <input type="text" class="form-control" placeholder="Mã Bệnh Nhân"
+                                   id="mabenhnhan-thembenhan">
                         </div>
                         <div class="input-group mb-3">
                             <input type="number" class="form-control" placeholder="Số Giường" id="sogiuong-thembenhan">
@@ -317,8 +322,123 @@
             </div>
         </div>
         <!-- End Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="modal-xetnghiem" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Xét Nghiệm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Xét Nghiệm" id="maxetnghiem-xn">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Khám"
+                                   id="makham-xn">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="datetime-local" class="form-control" placeholder="Thời Gian Xét Nghiệm"
+                                   id="tgxetnghiem-xn">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Tên Xét Nghiệm" id="tenxn-xn">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Nhận Xét" id="nhanxet-xn">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-primary" id="submit-themxetnghiem">Cật Nhật</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="modal-chupphim" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Chụp Phim</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Phim" id="maphim-phim">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="datetime-local" class="form-control" placeholder="Thời Gian Chụp"
+                                   id="tgchup-phim">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Khám"
+                                   id="makham-phim">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Loại Phim" id="loaiphim-phim">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Nhận Xét" id="nhanxet-phim">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-primary" id="submit-chupphim">Cật Nhật</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+        <div class="container">
 
+            <div class="row">
+                <div class="col-md-12" data-toggle="modal" data-target="#modal-dangkibenhnhan">
+                    <div class="card card-1">
+                        <h3><i class="fa fa-plus"></i> Thêm Mới Bệnh Nhân</h3>
+                        <p>A curated set of ES5/ES6/TypeScript wrappers for plugins to easily add any native
+                            functionality to your Ionic apps.</p>
+                    </div>
+                </div>
+                <div class="col-md-12" data-toggle="modal" data-target="#modal-them-benh-nhan">
+                    <div class="card card-2">
+                        <h3><i class="fa fa-plus"></i> Khám Bệnh</h3>
+                        <p>Tabs, buttons, inputs, lists, cards, and more! A comprehensive library
+                            of mobile UI components, ready to go.</p>
+                    </div>
+                </div>
+                <div class="col-md-12" data-toggle="modal" data-target="#modal-thembenhan">
+                    <div class="card card-3">
+                        <h3><i class="fa fa-plus"></i> Thêm Bệnh Án</h3>
+                        <p>Learn how to easily customize and modify your app’s design to fit your
+                            brand across all mobile platform styles.</p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card card-3" data-toggle="modal" data-target="#modal-xetnghiem">
+                        <h3><i class="fa fa-plus"></i> Xét Nghiệm</h3>
+                        <p>Learn how to easily customize and modify your app’s design to fit your
+                            brand across all mobile platform styles.</p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card card-3" data-toggle="modal" data-target="#modal-chupphim">
+                        <h3><i class="fa fa-plus"></i> Chụp Phim</h3>
+                        <p>Learn how to easily customize and modify your app’s design to fit your
+                            brand across all mobile platform styles.</p>
+                    </div>
+                </div>
+            </div>
 
+        </div>
     </div>
     {% load static %}
     <script>var token = '{{csrf_token}}';</script>

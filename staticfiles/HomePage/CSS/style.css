@@ -1,0 +1,34 @@
+@font-face {
+    font-family: "peachcream";
+    src: url("../fonts/peachcream.ttf") format("truetype");
+}
+*{
+    text-decoration: none;
+}
+
+body {
+    position: relative;
+    min-height: 100%;
+    font-family: "Poppins", sans-serif;
+    padding: 0pt;
+    background-color: rgba(175, 175, 177, 0.6);
+}
+
+.logo {
+    font-family: peachcream !important;
+    font-size: 40px;
+    color: white;
+    transition: 0.9s;
+}
+
+.logo:hover {
+    color: blue;
+}
+
+.carousel .carousel-inner img {
+    width: 100%;
+    height: 400px;
+}
+.text-style{
+    color: #005cbf;
+}
