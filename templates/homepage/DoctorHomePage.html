@@ -4,292 +4,324 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <!-- Yeu cau 1 -->
-            <div class="col-sm">
-                <div>
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                             class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Yêu cầu 1</h5>
-                            <p class="card-text" style="text-overflow: ellipsis;
-                                word-wrap: break-word;
-                                overflow: hidden;
-                                min-height: 3.6em;
-                                max-height: 3.6em;
-                                line-height: 1.8em;">Cập nhật hoạt động khám/ chữa bệnh cho bệnh nhân ngoại trú trong
-                                một ca trực.</p>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#yeucau1">
-                                Cập nhật
-                            </button>
+    {#    <div class="container">#}
+    {#        <div class="row">#}
+    {#            <!-- Yeu cau 1 -->#}
+    {#            <div class="col-sm">#}
+    {#                <div>#}
+    {#                    <div class="card" style="width: 18rem;">#}
+    {#                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"#}
+    {#                             class="card-img-top" alt="...">#}
+    {#                        <div class="card-body">#}
+    {#                            <h5 class="card-title">Yêu cầu 1</h5>#}
+    {#                            <p class="card-text" style="text-overflow: ellipsis;#}
+    {#                                word-wrap: break-word;#}
+    {#                                overflow: hidden;#}
+    {#                                min-height: 3.6em;#}
+    {#                                max-height: 3.6em;#}
+    {#                                line-height: 1.8em;">Cập nhật hoạt động khám/ chữa bệnh cho bệnh nhân ngoại trú trong#}
+    {#                                một ca trực.</p>#}
+    {#                            <!-- Button trigger modal -->#}
+    {#                            <button type="button" class="btn btn-primary" data-toggle="modal"#}
+    {#                                    data-target="#yeucau1">#}
+    {#                                Cập nhật#}
+    {#                            </button>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <!-- Modal -->#}
+    {#                <div class="modal fade" id="yeucau1" tabindex="-1" aria-labelledby="exampleModalLabel"#}
+    {#                     aria-hidden="true">#}
+    {#                    <div class="modal-dialog">#}
+    {#                        <div class="modal-content">#}
+    {#                            <div class="modal-header">#}
+    {#                                <h5 class="modal-title" id="exampleModalLabel">Cập nhật hoạt động khám chữa bệnh</h5>#}
+    {#                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+    {#                                    <span aria-hidden="true">&times;</span>#}
+    {#                                </button>#}
+    {#                            </div>#}
+    {#                            <div class="modal-body">#}
+    {#                                <div class="input-group mb-3">#}
+    {#                                    <input type="text" class="form-control" placeholder="Mã Khám" id="makham">#}
+    {#                                </div>#}
+    {#                                <div class="input-group mb-3">#}
+    {#                                    <input type="datetime-local" class="form-control" placeholder="Thời Gian Khám"#}
+    {#                                           id="tgk">#}
+    {#                                </div>#}
+    {#                                <div class="form-group">#}
+    {#                                    <div class="input-group mb-3">#}
+    {#                                        <select class="form-control" id="cakham">#}
+    {#                                            <option>Ca 1</option>#}
+    {#                                            <option>Ca 2</option>#}
+    {#                                            <option>Ca 3</option>#}
+    {#                                        </select>#}
+    {#                                    </div>#}
+    {#                                </div>#}
+    {#                                <div class="input-group mb-3">#}
+    {#                                    <input type="text" class="form-control" placeholder="Mã Bệnh Nhân" id="mabenhnhan">#}
+    {#                                </div>#}
+    {#                            </div>#}
+    {#                            <div class="modal-footer">#}
+    {#                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>#}
+    {#                                <button type="button" class="btn btn-primary" id="submit1">Cật Nhật</button>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <!-- End Modal -->#}
+    {#            </div>#}
+    {#            <!-- Yeu cau 2 -->#}
+    {#            <div class="col-sm">#}
+    {#                <div>#}
+    {#                    <div class="card" style="width: 18rem;">#}
+    {#                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"#}
+    {#                             class="card-img-top" alt="...">#}
+    {#                        <div class="card-body">#}
+    {#                            <h5 class="card-title">Yêu cầu 2</h5>#}
+    {#                            <p class="card-text" style="text-overflow: ellipsis;#}
+    {#                                word-wrap: break-word;#}
+    {#                                overflow: hidden;#}
+    {#                                min-height: 3.6em;#}
+    {#                                max-height: 3.6em;#}
+    {#                                line-height: 1.8em;">Cập nhật hoạt động khám/ chữa bệnh cho bệnh nhân nội trú trong một#}
+    {#                                ca trực.</p>#}
+    {#                            <a id="submit2" class="btn btn-primary">Xem</a>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            <!-- Yeu cau 3-->#}
+    {#            <div class="col-sm">#}
+    {#                <div>#}
+    {#                    <div class="card" style="width: 18rem;">#}
+    {#                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"#}
+    {#                             class="card-img-top" alt="...">#}
+    {#                        <div class="card-body">#}
+    {#                            <h5 class="card-title">Yêu cầu 3</h5>#}
+    {#                            <p class="card-text" style="text-overflow: ellipsis;#}
+    {#                                word-wrap: break-word;#}
+    {#                                overflow: hidden;#}
+    {#                                min-height: 3.6em;#}
+    {#                                max-height: 3.6em;#}
+    {#                                line-height: 1.8em;">Xem danh sách bệnh nhân trong một ngày mà mình đã phụ trách.</p>#}
+    {#                            <!-- Button trigger modal -->#}
+    {#                            <button type="button" class="btn btn-primary" data-toggle="modal"#}
+    {#                                    data-target="#yeucau3-1">#}
+    {#                                Xem#}
+    {#                            </button>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <!-- Modal Chon Ngay -->#}
+    {#                <div class="modal fade" id="yeucau3-1" tabindex="-1" aria-labelledby="exampleModalLabel"#}
+    {#                     aria-hidden="true">#}
+    {#                    <div class="modal-dialog">#}
+    {#                        <div class="modal-content">#}
+    {#                            <div class="modal-header">#}
+    {#                                <h5 class="modal-title" id="exampleModalLabel">Chọn Ngày</h5>#}
+    {#                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+    {#                                    <span aria-hidden="true">&times;</span>#}
+    {#                                </button>#}
+    {#                            </div>#}
+    {#                            <div class="modal-body">#}
+    {#                                <div class="input-group mb-3">#}
+    {#                                    <input placeholder="Chọn Ngày" class="form-control" type="text"#}
+    {#                                           onfocus="(this.type='date')" onblur="(this.type='text')" id="ngaykham"/>#}
+    {#                                </div>#}
+    {#                            </div>#}
+    {#                            <div class="modal-footer">#}
+    {#                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>#}
+    {#                                <button type="button" class="btn btn-primary" id="submit3-1">Tiếp Theo</button>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <!-- End Modal -->#}
+    {#                <!-- Modal  Show -->#}
+    {#                <div class="modal fade " id="yeucau3-2" tabindex="-1" aria-labelledby="exampleModalLabel"#}
+    {#                     aria-hidden="true">#}
+    {#                    <div class="modal-dialog modal-lg">#}
+    {#                        <div class="modal-content">#}
+    {#                            <div class="modal-header">#}
+    {#                                <h5 class="modal-title" id="exampleModalLabel">Danh Sách Bệnh Nhân Khám Trong Ngày</h5>#}
+    {#                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+    {#                                    <span aria-hidden="true">&times;</span>#}
+    {#                                </button>#}
+    {#                            </div>#}
+    {#                            <div class="modal-body modal-lg" id="modal-show3-2">#}
+    {##}
+    {#                            </div>#}
+    {#                            <div class="modal-footer modal-lg">#}
+    {#                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>#}
+    {#                            </div>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                <!-- End Modal -->#}
+    {#            </div>#}
+    {##}
+    {#        </div>#}
+    {##}
+    {##}
+    {##}
+    {#    </div>#}
+    <div class="container mt-2">
+        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target="#modal-dangkibenhnhan"><i
+                class="fa fa-plus"></i> Bệnh Nhân Đăng Kí
+        </button>
+        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target="#modal-them-benh-nhan"><i
+                class="fa fa-plus"></i> Thêm Bệnh Nhân
+        </button>
+        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target="#modal-thembenhan"><i
+                class="fa fa-plus"></i> Thêm Bệnh Án
+        </button>
+        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target=""><i
+                class="fa fa-plus"></i> Chụp Phim
+        </button>
+        <button class="btn btn-success p-lg-3" data-toggle="modal" data-target=""><i
+                class="fa fa-plus"></i> Xét Nghiệm
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="modal-them-benh-nhan" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm Bệnh Nhân</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Khám" id="makham">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="datetime-local" class="form-control" placeholder="Thời Gian Khám"
+                                   id="thoigiankham">
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group mb-3">
+                                <select class="form-control" id="cakham">
+                                    <option>Ca 1</option>
+                                    <option>Ca 2</option>
+                                    <option>Ca 3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Bệnh Nhân"
+                                   id="mabenhnhan2">
+                        </div>
+                        <div id="loaibenhnhan">
+                            <input type="radio" value="noitru" name="loaibenhnhan" id="noitru" checked>
+                            <label for="noitru">Nội Trú</label>
+                            <input class="ml-5" type="radio" value="ngoaitru" name="loaibenhnhan" id="ngoaitru">
+                            <label for="ngoaitru">Ngoại Trú</label>
                         </div>
                     </div>
-                </div>
-                <!-- Modal -->
-                <div class="modal fade" id="yeucau1" tabindex="-1" aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Cập nhật hoạt động khám chữa bệnh</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Mã Khám" id="makham">
-                                </div>
-                                <div class="input-group mb-3">
-                                    <input type="datetime-local" class="form-control" placeholder="Thời Gian Khám"
-                                           id="tgk">
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group mb-3">
-                                        <select class="form-control" id="cakham">
-                                            <option>Ca 1</option>
-                                            <option>Ca 2</option>
-                                            <option>Ca 3</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Mã Bệnh Nhân" id="mabenhnhan">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
-                                <button type="button" class="btn btn-primary" id="submit1">Cật Nhật</button>
-                            </div>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-primary" id="submit-thembenhnhan">Cật Nhật</button>
                     </div>
                 </div>
-                <!-- End Modal -->
             </div>
-            <!-- Yeu cau 2 -->
-            <div class="col-sm">
-                <div>
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                             class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Yêu cầu 2</h5>
-                            <p class="card-text" style="text-overflow: ellipsis;
-                                word-wrap: break-word;
-                                overflow: hidden;
-                                min-height: 3.6em;
-                                max-height: 3.6em;
-                                line-height: 1.8em;">Cập nhật hoạt động khám/ chữa bệnh cho bệnh nhân nội trú trong một
-                                ca trực.</p>
-                            <a id="submit2" class="btn btn-primary">Xem</a>
-                        </div>
+        </div>
+        <!-- End Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="modal-dangkibenhnhan" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Đăng Kí Bệnh Nhân</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </div>
-            </div>
-            <!-- Yeu cau 3-->
-            <div class="col-sm">
-                <div>
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                             class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Yêu cầu 3</h5>
-                            <p class="card-text" style="text-overflow: ellipsis;
-                                word-wrap: break-word;
-                                overflow: hidden;
-                                min-height: 3.6em;
-                                max-height: 3.6em;
-                                line-height: 1.8em;">Xem danh sách bệnh nhân trong một ngày mà mình đã phụ trách.</p>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#yeucau3-1">
-                                Xem
-                            </button>
+                    <div class="modal-body">
+                        <h5 class="text-primary">Thông Tin Nhân Khẩu</h5>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Bệnh Nhân" id="mabenhnhan">
                         </div>
-                    </div>
-                </div>
-                <!-- Modal Chon Ngay -->
-                <div class="modal fade" id="yeucau3-1" tabindex="-1" aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Chọn Ngày</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="input-group mb-3">
-                                    <input placeholder="Chọn Ngày" class="form-control" type="text"
-                                           onfocus="(this.type='date')" onblur="(this.type='text')" id="ngaykham"/>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
-                                <button type="button" class="btn btn-primary" id="submit3-1">Tiếp Theo</button>
-                            </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Họ" id="ho">
                         </div>
-                    </div>
-                </div>
-                <!-- End Modal -->
-                <!-- Modal  Show -->
-                <div class="modal fade " id="yeucau3-2" tabindex="-1" aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Danh Sách Bệnh Nhân Khám Trong Ngày</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body modal-lg" id="modal-show3-2">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Tên" id="ten">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="number" min="0"
+                                   onkeyup="if(this.value<0){this.value= 0} else if (this.value>200) {this.value=200}"
+                                   class="form-control" placeholder="Tuổi" id="tuoi">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Dân Tộc" id="dantoc">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Nghề Ngiệp" id="nghenghiep">
+                        </div>
 
-                            </div>
-                            <div class="modal-footer modal-lg">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
-                            </div>
+                        <h5 class="text-primary">Thông Tin Bảo Hiểm</h5>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Thẻ" id="mathe">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="date" class="form-control" placeholder="Thời Hạn" id="thoihan">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Nơi Đăng Kí" id="noidangki">
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-primary" id="submit-dangkibenhnhan">Cật Nhật</button>
+                    </div>
                 </div>
-                <!-- End Modal -->
             </div>
+        </div>
+        <!-- End Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="modal-thembenhan" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm Bệnh Án</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="datetime-local" class="form-control" placeholder="Thời Gian Nhập Viện" id="thoigiannhapvien">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Khoa" id="makhoa-thembenhan">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Bệnh Nhân" id="mabenhnhan-thembenhan">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeholder="Số Giường" id="sogiuong-thembenhan">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeholder="Số Buồng" id="sobuong-thembenhan">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-primary" id="submit-thembenhan">Cật Nhật</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
 
-        </div>
-        <div class="row">
-            <!-- Yeu cau 4 -->
-            <div class="col-sm">
-                <div>
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                             class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Yêu cầu 4</h5>
-                            <p class="card-text" style="text-overflow: ellipsis;
-                                word-wrap: break-word;
-                                overflow: hidden;
-                                min-height: 3.6em;
-                                max-height: 3.6em;
-                                line-height: 1.8em;">
-                                Xem các chẩn đoán bệnh của một bệnh nhân mà mình đã phụ trách.</p>
-                            <a href="#" class="btn btn-primary">Xem</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Yeu cau 5 -->
-            <div class="col-sm">
-                <div>
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                             class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Yêu cầu 5</h5>
-                            <p class="card-text" style="text-overflow: ellipsis;
-                                word-wrap: break-word;
-                                overflow: hidden;
-                                min-height: 3.6em;
-                                max-height: 3.6em;
-                                line-height: 1.8em;">
-                                Xem các thuốc đã được dùng qua các ngày của một bệnh nhân nội trú mà mình đã phụ
-                                trách.</p>
-                            <a href="#" class="btn btn-primary">Xem</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Yeu cau 6 -->
-            <div class="col-sm">
-                <div>
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                             class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Yêu cầu 6</h5>
-                            <p class="card-text" style="text-overflow: ellipsis;
-                                word-wrap: break-word;
-                                overflow: hidden;
-                                min-height: 3.6em;
-                                max-height: 3.6em;
-                                line-height: 1.8em;">
-                                Xem các chỉ định xét nghiệm đã làm qua các ngày của một bệnh nhân nội trú mà mình đã phụ
-                                trách.</p>
-                            <a href="#" class="btn btn-primary">Xem</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <!-- Yeu cau 7 -->
-            <div class="col-sm">
-                <div>
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                             class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Yêu cầu 7</h5>
-                            <p class="card-text" style="text-overflow: ellipsis;
-                                word-wrap: break-word;
-                                overflow: hidden;
-                                min-height: 3.6em;
-                                max-height: 3.6em;
-                                line-height: 1.8em;">
-                                Xem các chỉ định chụp phim đã làm qua các ngày của một bệnh nhân nội trú mà mình đã phụ
-                                trách.</p>
-                            <a href="#" class="btn btn-primary">Xem</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Yeu cau 8 -->
-            <div class="col-sm">
-                <div>
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                             class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Yêu cầu 8</h5>
-                            <p class="card-text" style="text-overflow: ellipsis;
-                                word-wrap: break-word;
-                                overflow: hidden;
-                                min-height: 3.6em;
-                                max-height: 3.6em;
-                                line-height: 1.8em;">
-                                Xem các bệnh nhân của cùng một bệnh mà mình đã chẩn đoán.</p>
-                            <a href="#" class="btn btn-primary">Xem</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Yeu cau 9 -->
-            <div class="col-sm">
-                <div>
-                    <div class="card" style="width: 18rem;">
-                        <img src="https://images.pexels.com/photos/414102/pexels-photo-414102.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                             class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Yêu cầu 9</h5>
-                            <p class="card-text" style="text-overflow: ellipsis;
-                                word-wrap: break-word;
-                                overflow: hidden;
-                                min-height: 3.6em;
-                                max-height: 3.6em;
-                                line-height: 1.8em;">Xem các bệnh nhân có ghi chú “bất thường” trong kết quả xét nghiệm
-                                của cùng một bệnh mà mình đã chẩn đoán.</p>
-                            <a href="#" class="btn btn-primary">Xem</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
     {% load static %}
     <script>var token = '{{csrf_token}}';</script>
-    <script src="{% static 'bootstrap/js/doctor.js' %}"></script>
+    <script src="{% static 'bootstrap/js/doctor.js' %}">
+    </script>
 {% endblock %}

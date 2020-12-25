@@ -5,13 +5,18 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
 from doctor import models
+from patient import models as patient_model
 
 
 # Create your views here.
 @csrf_exempt
 def patient_view(request, id=None):
     if id:
-        pass
+        patient_info = patient_model.get_patient_info(id)
+        context = {
+            'patient_info': patient_info
+        }
+        return render(request, 'patient/PatientDetail.html', context)
     if request.POST:
         if request.POST['type'] == 'date_filter':
             data1 = json.loads(request.POST['data'])
@@ -21,7 +26,6 @@ def patient_view(request, id=None):
                 res.status_code = 200
                 return res
             except Exception as e:
-                print(e)
                 res = JsonResponse({'error': 'Không Query được !'})
                 res.status_code = 403
                 return res

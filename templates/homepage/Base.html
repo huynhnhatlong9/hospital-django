@@ -4,6 +4,7 @@
 <head>
     {% load static %}
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <script type="text/javascript" src="{% static 'bootstrap/js/jquery-3.5.1.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'HomePage/CSS/style.css' %}"/>
@@ -35,7 +36,7 @@
     <div class="collapse navbar-collapse ml-md-4" id="navbarCollapse">
         <div class="navbar-nav">
             <a href="{% url 'homepage' %}" class="nav-item nav-link active">Home</a>
-{#            <a href="" class="nav-item nav-link">Menu</a>#}
+            {#            <a href="" class="nav-item nav-link">Menu</a>#}
             <a href="{% url 'profile' %}" class="nav-item nav-link">Thông Tin</a>
             {% if user.isDoctor %}
                 <a href="{% url 'patient_info' %}" class="nav-item nav-link">Bệnh Nhân</a>

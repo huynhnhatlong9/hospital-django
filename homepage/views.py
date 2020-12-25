@@ -58,6 +58,37 @@ def homeView(request):
         return render(request, template_name='homepage/PatientHomePage.html')
     if request.user.isDoctor:
         if request.POST:
+            if request.POST['type'] == 'themmoibenhnhan':
+                try:
+                    doctor_model.taomoibenhnhan(request, json.loads(request.POST['data']))
+                    res = JsonResponse({"success": True})
+                    res.status_code = 200
+                    return res
+                except Exception as e:
+                    res = JsonResponse({'error': str(e)})
+                    res.status_code = 403
+                    return res
+            if request.POST['type'] == 'thembenhnhan':
+                try:
+                    doctor_model.thembenhnhan(request, json.loads(request.POST['data']))
+                    res = JsonResponse({"success": True})
+                    res.status_code = 200
+                    return res
+                except Exception as e:
+                    res = JsonResponse({'error': str(e)})
+                    res.status_code = 403
+                    return res
+            if request.POST['type'] == 'thembenhan':
+                try:
+                    doctor_model.thembenhan(request, json.loads(request.POST['data']))
+                    res = JsonResponse({"success": True})
+                    res.status_code = 200
+                    return res
+                except Exception as e:
+                    print("loi")
+                    res = JsonResponse({'error': str(e)})
+                    res.status_code = 403
+                    return res
             if request.POST['type'] == 'BS3':
                 try:
                     data = doctor_model.proc_BS3(request)

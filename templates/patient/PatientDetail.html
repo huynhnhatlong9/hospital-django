@@ -1,0 +1,28 @@
+{% extends 'homepage/Base.html' %}
+{% block title %}
+    <title>Detail</title>
+{% endblock %}
+{% block extraheader %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'patient/patient_detail.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="page-heading ml-5 mr-5">
+        <div class="media ">
+            <div class="">
+                <a href="#">
+                    <img style="border-radius: 50%" class="bg-dark media-object w-50 p-3" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
+                </a>
+            </div>
+            <div class="mt-4">
+                <h2 class="media-heading">{{ patient_info.0.TEN}}
+                    <small> - Profile</small>
+                </h2>
+                <h5 class="text-dark">Mã số: {{ patient_info.0.MA_BN }}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="page-content">
+
+    </div>
+{% endblock %}

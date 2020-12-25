@@ -19,7 +19,7 @@ def get_patient_info(ssn):
         else:
             thongtin = None
         cursor.execute(
-            "select MA_THE,THOI_HAN,NOI_DANG_KY from BHYT join BENHNHAN B on B.MA_BN = BHYT.BN where BN='" + str(
+            "select MA_THE,THOI_HAN,NOI_DANG_KY from BHYT join BENHNHAN B on B.BHYT = BHYT.MA_THE where B.MA_BN='" + str(
                 ssn) + "'")
         a = cursor.fetchone()
         if a:

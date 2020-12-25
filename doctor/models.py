@@ -30,8 +30,51 @@ def danhsachbenhnhan(request):
             print(e)
 
 
-def proc_BS3(ssn,ngaykham):
+def taomoibenhnhan(request, data):
+    with connections['doctor'].cursor() as cursor:
+        try:
+            cursor.callproc('BENHNHAN_DANGKY',
+                            [data['mabenhnhan'], data['ho'], data['ten'], data['tuoi'], data['dantoc'],
+                             data['nghenghiep'], data['mathe'], data['thoihan'],
+                             data['noidangki']])
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
 
+
+def thembenhnhan(request, data):
+    print(data)
+    with connections['doctor'].cursor() as cursor:
+        try:
+            if data['loaibenhnhan'] == 'noitru':
+                cursor.callproc('THEM_BENHNHAN_NOITRU',
+                                [data['makham'], data['thoigiankham'], data['cakham'], data['mabenhnhan'],
+                                 request.user.ssn])
+            elif data['loaibenhnhan'] == 'ngoaitru':
+                cursor.callproc('THEM_BENHNHAN_NGOAITRU',
+                                [data['makham'], data['thoigiankham'], data['cakham'], data['mabenhnhan'],
+                                 request.user.ssn])
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
+
+
+# Thêm Bệnh Án
+def thembenhan(request, data):
+    print("check")
+    with connections['doctor'].cursor() as cursor:
+        try:
+            cursor.callproc('CHINHSUA_BANT_NV',
+                            [data['thoigiannhapvien'], data['makhoa'], request.user.ssn, data['mabenhnhan'],
+                             data['sogiuong'],
+                             data['sobuong']])
+            return cursor.fetchall()
+        except Exception as e:
+            print("okkk")
+            raise e
+
+
+def proc_BS3(ssn, ngaykham):
     with connections['doctor'].cursor() as cursor:
         try:
             cursor.callproc('BS3', [ngaykham, ssn])
