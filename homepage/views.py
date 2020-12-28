@@ -41,20 +41,6 @@ def homeView(request):
     if str(request.user) == 'AnonymousUser':
         return render(request, template_name='homepage/HomePage.html')
     if request.user.isPatient:
-        if request.POST:
-            # Yeu cau 1
-            if request.POST['type'] == 'BN1':
-                try:
-                    patient_model.proc_BN1(request)
-                except Exception as e:
-                    respne = JsonResponse({"success": False, "error": "Không thể cập nhật"})
-                    respne.status_code = 403
-                    return respne
-            # Yeu cau 2
-            if request.POST['type'] == 'BN2':
-                data = patient_model.proc_BN2(request)
-                res = JsonResponse(data)
-                return res
         return render(request, template_name='homepage/PatientHomePage.html')
     if request.user.isDoctor:
         if request.POST:
@@ -89,7 +75,7 @@ def homeView(request):
                     res = JsonResponse({'error': str(e)})
                     res.status_code = 403
                     return res
-            if request.POST['type']=='themxetnghiem':
+            if request.POST['type'] == 'themxetnghiem':
                 try:
                     doctor_model.themxetnghiem(request, json.loads(request.POST['data']))
                     res = JsonResponse({"success": True})
@@ -99,7 +85,7 @@ def homeView(request):
                     res = JsonResponse({'error': str(e)})
                     res.status_code = 403
                     return res
-            if request.POST['type']=='themphim':
+            if request.POST['type'] == 'themphim':
                 try:
                     doctor_model.themphim(request, json.loads(request.POST['data']))
                     res = JsonResponse({"success": True})

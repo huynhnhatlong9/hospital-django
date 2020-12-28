@@ -3,7 +3,16 @@
     <title>Patient Info</title>
 {% endblock %}
 {% block content %}
+    <div class="container mt-2">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item" ><a href="{% url 'homepage' %}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">PatientInfo</li>
+            </ol>
+        </nav>
+    </div>
     <div class="container jumbotron mt-3 pt-3 bg-light">
+
         <fieldset class="border-bottom border-primary mb-3">
             <legend class="text-dark">Danh Sách Bệnh Nhân</legend>
         </fieldset>
@@ -13,27 +22,29 @@
         </div>
 
         <br>
-        <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered" >
+        <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
             <thead class="thead-inverse|thead-default table-bordered table-info">
             <tr>
+                <th>Mã Khám</th>
                 <th>Mã Bệnh Nhân</th>
                 <th>Tên</th>
                 <th>Tuổi</th>
-                <th>Dân Tộc</th>
-                <th>Nghề Nghiệp</th>
+                <th>Thời Gian Khám</th>
                 <th>Chi Tiết</th>
             </tr>
             </thead>
             <tbody id="listbenhnhan">
             {% for value in data %}
                 <tr>
+                    <td scope="row">{{ value.7 }}</td>
                     <td scope="row">{{ value.0 }}</td>
                     <td scope="row">{{ value.1 }} {{ value.2 }}</td>
                     <td scope="row">{{ value.3 }}</td>
-                    <td scope="row">{{ value.4 }}</td>
-                    <td scope="row">{{ value.5 }}</td>
+                    <td scope="row">{{ value.11 }}</td>
                     <td>
-                        <a href={% url 'patient_info_with_id' value.0 %}><button class="btn btn-success">Xem</button></>
+                        <a href={% url 'patient_info_with_id' value.0 value.7 %}>
+                            <button class="btn btn-success">Xem</button>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

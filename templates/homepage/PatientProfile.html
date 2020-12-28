@@ -1,11 +1,16 @@
 {% extends 'homepage/Base.html' %}
 {% block title %}
-<title>Profile</title>
+    <title>Profile</title>
 {% endblock %}
 {% block content %}
-<div class="container jumbotron mt-3 pt-3 bg-light">
+    <div class="container jumbotron mt-3 pt-3 bg-light">
         <fieldset class="border-bottom border-success mb-3">
-            <legend class="text-success">Thông Tin Bệnh Nhân</legend>
+            <legend class="text-success">
+                <p class="d-inline ">Thông Tin Nhân Khẩu</p>
+                <button class="float-lg-right d-inline btn btn-success" data-toggle="modal"
+                        data-target="#modal-capnhatnhankhau"><i class="fa fa-pencil-square-o"></i> Sửa
+                </button>
+            </legend>
         </fieldset>
         <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
             <thead class="thead-inverse|thead-default table-bordered table-success">
@@ -18,16 +23,25 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    {% for key,value in info.items %}
+            <tr>
+                {% for key,value in info.items %}
                     <td scope="row">{{ value }}</td>
-                    {% endfor %}
-                </tr>
+                {% endfor %}
+            </tr>
 
             </tbody>
         </table>
+
+
+    </div>
+    <div class="container jumbotron mt-3 pt-3 bg-light">
         <fieldset class="border-bottom border-success mb-3">
-            <legend class="text-success">Thông Tin Bảo Hiểm</legend>
+            <legend class="text-success">
+                <p class="d-inline ">Thông Tin Bảo Hiểm</p>
+                <button class="float-lg-right d-inline btn btn-success" data-toggle="modal"
+                        data-target="#modal-capnhatbaohiem"><i class="fa fa-pencil-square-o"></i> Sửa
+                </button>
+            </legend>
         </fieldset>
         <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
             <thead class="thead-inverse|thead-default table-bordered table-success">
@@ -38,14 +52,86 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    {% for key,value in baohiem.items %}
+            <tr>
+                {% for key,value in baohiem.items %}
                     <td scope="row">{{ value }}</td>
-                    {% endfor %}
-                </tr>
-
+                {% endfor %}
+            </tr>
             </tbody>
         </table>
-
     </div>
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="modal-capnhatnhankhau" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cập Nhật Thông Tin Nhân Khẩu</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Họ" id="ho">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Tên" id="ten">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="number" min="0"
+                                   onkeyup="if(this.value<0){this.value= 0} else if (this.value>200) {this.value=200}"
+                                   class="form-control" placeholder="Tuổi" id="tuoi">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Dân Tộc" id="dantoc">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Nghề Ngiệp" id="nghenghiep">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-primary" id="submit">Cật Nhật</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="modal-capnhatbaohiem" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cập Nhật Bảo Hiểm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Thẻ" id="mathe">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="date" class="form-control" placeholder="Thời Gian" id="tgdk">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Nơi Đăng Kí" id="noidangki">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-primary" id="submit">Cật Nhật</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+    </div>
+    {% load static %}
+    <script>var token = '{{csrf_token}}';</script>
+    <script src="{% static 'bootstrap/js/patient.js' %}"></script>
 {% endblock %}

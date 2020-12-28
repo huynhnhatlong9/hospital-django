@@ -1,10 +1,11 @@
 {% extends 'homepage/Base.html' %}
 {% block title %}
-    <title>Profile</title>
+    <title>Chế Độ Thuốc</title>
 {% endblock %}
+
 {% block content %}
     <div class="container mt-2">
-        <nav aria-label="breadcrumb" >
+        <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Profile</li>
@@ -13,27 +14,31 @@
     </div>
     <div class="container jumbotron mt-3 pt-3 bg-light">
         <fieldset class="border-bottom border-success mb-3">
-            <legend class="text-success">Thông Tin Bác Sĩ</legend>
+            <legend class="text-success">Chế Độ Dinh Dưỡng</legend>
         </fieldset>
         <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
             <thead class="thead-inverse|thead-default table-bordered table-success">
             <tr>
-                <th>Mã Bác Sĩ</th>
-                <th>Tên</th>
-                <th>Khoa</th>
-                <th>Chuyên Khoa</th>
-                <th>Lương</th>
-                <th>Ca làm việc</th>
-                <th>Kinh Nghiệm</th>
+                <th>Mã Khám</th>
+                <th>Nội Dung</th>
+                <th>Hướng Dẫn</th>
+                <th>Chỉ Định</th>
+                <th>Ghi Chú</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                {% for key,value in info.items %}
-                    <td scope="row">{{ value }}</td>
-                {% endfor %}
-            </tr>
+            {% for value in chedodinhduong %}
+                <tr>
+                    <td scope="row">{{ value.0 }}</td>
+                    <td scope="row">{{ value.1 }}</td>
+                    <td scope="row">{{ value.2 }}</td>
+                    <td scope="row">{{ value.3 }}</td>
+                    <td scope="row">{{ value.4 }}</td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
 {% endblock %}
+
+

@@ -22,6 +22,7 @@ from Hospital import settings
 from homepage import views as homepage_view
 from account import views as account_view
 from doctor import views as doctor_view
+from patient import views as patient_view
 
 urlpatterns = [
                   path('', homepage_view.homeView, name='homepage'),
@@ -30,6 +31,13 @@ urlpatterns = [
                   path('register', homepage_view.register, name='register'),
                   path('logout', LogoutView.as_view(template_name='homepage/HomePage.html'), name='logout'),
                   path('profile', account_view.profile, name='profile'),
-                  path('patient/<str:id>', doctor_view.patient_view, name='patient_info_with_id'),
-                  path('patient', doctor_view.patient_view, name='patient_info')
+                  path('patient/<str:id>/<str:makham>', doctor_view.patient_view, name='patient_info_with_id'),
+                  path('patient', doctor_view.patient_view, name='patient_info'),
+                  path('moreinfo', doctor_view.more_info, name='more_info'),
+                  path('chedothuoc', patient_view.chedothuoc, name='chedothuoc'),
+                  path('chedodinhduong', patient_view.chedodinhduong, name='chedodinhduong'),
+                  path('danhsachbacsi', patient_view.danhsachbacsi, name='danhsachbacsi'),
+                  path('danhsachxetnghiem', patient_view.danhsachxetnghiem, name='danhsachxetnghiem'),
+                  path('xetnghiem', doctor_view.xetnghiem, name='xetnghiem'),
+                  path('chupphim', doctor_view.chupphim, name='chupphim')
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

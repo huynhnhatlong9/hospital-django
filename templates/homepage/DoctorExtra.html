@@ -1,0 +1,182 @@
+{% extends 'homepage/Base.html' %}
+{% block title %}
+    <title>More Info</title>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="container mt-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="{% url 'patient_info' %}">MoreInfo</a></li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="container jumbotron mt-3 pt-3 bg-light">
+            <fieldset class="border-bottom border-success mb-3">
+                <legend class="text-success d-inline">
+                    <p class="d-inline ">Danh Sách Các Bệnh</p>
+                    <button class="float-lg-right d-inline btn btn-success" data-toggle="modal"
+                            data-target="#modal-thembenh"><i class="fa fa-pencil-square-o"></i> Thêm
+                    </button>
+
+                </legend>
+            </fieldset>
+            <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
+                <thead class="thead-inverse|thead-default table-bordered table-success">
+                <tr>
+                    <th>Mã Bệnh</th>
+                    <th>Tên Bệnh</th>
+                    <th>Mô Tả</th>
+                    <th>Chi Tiết</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for value in listbenh %}
+                    <tr>
+                        <td scope="row">{{ value.0 }}</td>
+                        <td scope="row">{{ value.1 }}</td>
+                        <td scope="row">{{ value.2 }}</td>
+                        <td scope="row">
+                            <button class="btn btn-outline-primary btn-listbenhnhan" value="{{ value.0 }},{{ user.ssn }}"><i
+                                    class="fa fa-list"  ></i> Bệnh Nhân
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container jumbotron mt-3 pt-3 bg-light">
+            <fieldset class="border-bottom border-success mb-3">
+                <legend class="text-success d-inline">
+                    <p class="d-inline ">Danh Sách Các Thuốc</p>
+                    <button class="float-lg-right d-inline btn btn-success" data-toggle="modal"
+                            data-target="#modal-themthuoc"><i class="fa fa-pencil-square-o"></i> Thêm
+                    </button>
+
+                </legend>
+            </fieldset>
+            <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
+                <thead class="thead-inverse|thead-default table-bordered table-success">
+                <tr>
+                    <th>Mã Thuốc</th>
+                    <th>Tên Thuốc</th>
+                    <th>Loại Thuốc</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for value in listthuoc %}
+                    <tr>
+                        <td scope="row">{{ value.0 }}</td>
+                        <td scope="row">{{ value.1 }}</td>
+                        <td scope="row">{{ value.2 }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <!-- Modal -->
+        <div class="modal fade" id="modal-themthuoc" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm Thuốc Mới</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Thuốc" id="mathuoc">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Tên Thuốc"
+                                   id="tenthuoc">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Loại Thuốc"
+                                   id="loaithuoc">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-success" id="submit">Thêm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="modal-thembenh" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm Bệnh Mới</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Bệnh" id="mabenh">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Tên Bệnh"
+                                   id="tenbenh">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mô Tả"
+                                   id="mota">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-success" id="submit">Thêm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+    </div>
+    <div>
+        <!-- Modal -->
+        <div class="modal fade" id="modal-listbenhnhan" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <fieldset class="border-bottom border-success w-100 mr-3">
+                            <legend>
+                                <h5 class="d-inline text-success mr-5">Danh Sách Bệnh Nhân Của Bệnh</h5>
+                                <input type="radio" id="tatca" name="type" class="ml-5" checked>
+                                <label for="tatca"><h6>Tất Cả</h6></label>
+                                <input type="radio" id="batthuong" name="type" class="ml-5">
+                                <label for="batthuong"><h6>Bất Thường</h6></label>
+                            </legend>
+                        </fieldset>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+    </div>
+    {% load static %}
+    <script src="{% static 'bootstrap/js/doctorextra.js' %}"></script>
+{% endblock %}

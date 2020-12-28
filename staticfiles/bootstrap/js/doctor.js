@@ -88,6 +88,7 @@
 //     }
 // })
 
+
 $('#submit-dangkibenhnhan').on('click', function (e) {
     data = {
         mabenhnhan: $('#mabenhnhan').val(),
@@ -278,6 +279,161 @@ $('#submit-chupphim').on('click', function (e) {
     }
 })
 
+function validate(data) {
+    console.log("1")
+    let check = true
+    $.each(data, function (i, item) {
+        if (item == "" || (typeof (item) == "number" && isNaN(item))) {
+            check = false
+            toastr.error('Vui lòng điền đầy đủ thông tin!');
+            return false;
+        }
+    })
+    return check
+}
+
+$('#modal-themchandoan #submit').on('click', function (e) {
+    data = {
+        machandoan: $('#modal-themchandoan #machandoan').val(),
+        mabenh: $('#modal-themchandoan #mabenh').val(),
+        // makham: $('#modal-themchandoan #makham').val(),
+        noidung: $('#modal-themchandoan #noidung').val(),
+        ghichu: $('#modal-themchandoan #ghichu').val()
+    }
+    check = validate(data)
+    if (check) {
+        $.ajax({
+            url: "",
+            type: 'post',
+            data: {
+                type: "themchandoan",
+                data: JSON.stringify(data)
+            },
+            success: function (response) {
+                toastr.success('Thêm Thành Công!');
+                $('#modal-themchandoan').modal('hide');
+            },
+            error: function (data) {
+                toastr.error(data.responseJSON.error);
+            }
+        })
+    }
+});
+$('#modal-themthuoc #submit').on('click', function (e) {
+    data = {
+        machandoan: $('#modal-themthuoc #machandoan').val(),
+        mabenh: $('#modal-themthuoc #mabenh').val(),
+        // makham: $('#modal-themchandoan #makham').val(),
+        mathuoc: $('#modal-themthuoc #mathuoc').val(),
+        lieudung: $('#modal-themthuoc #lieudung').val(),
+        thoihandung: $('#modal-themthuoc #thoigiandung').val()
+    }
+    console.log(data)
+    check = validate(data)
+    if (check) {
+        $.ajax({
+            url: "",
+            type: 'post',
+            data: {
+                type: "themthuoc",
+                data: JSON.stringify(data)
+            },
+            success: function (response) {
+                toastr.success('Thêm Thành Công!');
+                $('#modal-themthuoc').modal('hide');
+            },
+            error: function (data) {
+                toastr.error(data.responseJSON.error);
+            }
+        })
+    }
+});
+
+$('.list button').on('click', function (e) {
+    makham = $(this).attr('value').split(",")[0]
+    maxetnghiem = $(this).attr('value').split(",")[1]
+    data = {
+        makham: makham,
+        maxetnghiem: maxetnghiem
+    }
+    let check = true;
+    if (check) {
+        $.ajax({
+            url: "",
+            type: 'post',
+            data: {
+                type: "xemketquaxetnghiem",
+                data: JSON.stringify(data)
+            },
+            success: function (response) {
+                let innerContent = ""
+                for (i of response.data) {
+                    innerContent += (`<tr>
+                        <td scope="row">${i[0]}</td>
+                        <td scope="row">${i[3]}</td>
+                        <td scope="row">${i[4]}</td>
+                        <td scope="row">${i[5]}</td>
+                    </tr>`)
+                }
+                $('#modal-xemketqua .modal-body').html("");
+                $('#modal-xemketqua .modal-body').html(`
+                <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
+                <thead class="thead-inverse|thead-default table-bordered table-primary">
+                <tr>
+                    <th>Mã Chỉ Số</th>
+                    <th>Giá Trị</th>
+                    <th>Kết Quả</th>
+                    <th>Mã Chỉ Số XN</th>
+                </tr>
+                </thead>
+                <tbody>
+                ${innerContent}
+                </tbody>
+                </table>
+                `)
+                $('#modal-xemketqua').modal();
+            },
+            error: function (data) {
+                toastr.error(data.responseJSON.error);
+            }
+        })
+    }
+});
+$('#btn-themkqetqua').on('click', function (e) {
+    $('#modal-xemketqua').modal('hide');
+    $('#modal-themketqua').modal();
+
+})
+$('#modal-themketqua #submit').on('click', function (e) {
+    data = {
+        'machiso': $('#modal-themketqua #machiso').val(),
+        'maxetnghiem': maxetnghiem,
+        'makham': makham,
+        'giatri': $('#modal-themketqua #giatri').val(),
+        'machisoxn': $('#modal-themketqua #machisoxn').val()
+    }
+    check = validate(data)
+    if (check) {
+        $.ajax({
+            url: "",
+            type: 'post',
+            data: {
+                type: "themketquaxetnghiem",
+                data: JSON.stringify(data)
+            },
+            success: function (response) {
+                toastr.success('Thêm Thành Công!');
+                $('#modal-themketqua').modal('hide');
+            },
+            error: function (data) {
+                toastr.error(data.responseJSON.error);
+            }
+        })
+    }
+})
+$('.modal').on('hidden.bs.modal', function (e) {
+    $(this).html("");
+});
 
 
 

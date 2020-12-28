@@ -26,7 +26,35 @@ def get_patient_info(ssn):
             baohiem = dict(zip(column_names, a))
         else:
             baohiem = None
-    return thongtin, baohiem
+        cursor.execute(
+            "select * from BENHNHAN join NOITRU N on BENHNHAN.MA_BN = N.MA_BN where N.MA_BN= '" + str(ssn) + "'")
+        if cursor.fetchone():
+            loaibenhnhan = 'Nội Trú'
+        else:
+            loaibenhnhan = 'Ngoại Trú'
+    return thongtin, baohiem, loaibenhnhan
+
+
+def danhsachthuoc_gannhat(ssn):
+    with connections['patient'].cursor() as cursor:
+        try:
+            cursor.callproc('BN2',
+                            [ssn])
+            return cursor.fetchone()
+        except Exception as e:
+            raise e
+
+
+def danhsachthuoc_tatca(request, data):
+    pass
+
+
+def ketquaxetnghiem_gannhat(request, data):
+    pass
+
+
+def ketquaxetnghiem_tatca(request, data):
+    pass
 
 
 def proc_BN1(request):
@@ -41,23 +69,45 @@ def proc_BN1(request):
             raise e
 
 
-def proc_BN2(request):
+def capnhatnhankhau(request, data):
+    with connections['patient'].cursor() as cursor:
+        try:
+            cursor.callproc('BN1_NHANKHAU',
+                            [request.user.ssn, data['ho'], data['ten'], data['tuoi'], data['dantoc'],
+                             data['nghenghiep']])
+            return True
+        except Exception as e:
+            raise e
+
+
+def capnhatbaohiem(request, data):
+    with connections['patient'].cursor() as cursor:
+        try:
+            cursor.callproc('BN1_BAOHIEM',
+                            [request.user.ssn, data['mathe'], data['thoihan'], data['noidangki']])
+            return True
+        except Exception as e:
+            raise e
+
+
+def proc_BN2(request, data):
     with connections['patient'].cursor() as cursor:
         try:
             cursor.callproc('BN2', [request.user.ssn])
-            return cursor.fetchone()
+            print(cursor.description)
+            return cursor.fetchall()
         except Exception as e:
-            print(e)
+            raise e
 
 
-def proc_BN3(request):
+def proc_BN3(request, data):
     with connections['patient'].cursor() as cursor:
         try:
             cursor.callproc('BN3', [request.user.ssn])
-            print(cursor.fetchone())
-            return cursor.fetchone()
+            print(cursor.description)
+            return cursor.fetchall()
         except Exception as e:
-            print(e)
+            raise e
 
 
 def proc_BN4(request):
@@ -70,14 +120,13 @@ def proc_BN4(request):
             print(e)
 
 
-def proc_BN5(request):
+def proc_BN5(request, data):
     with connections['patient'].cursor() as cursor:
         try:
             cursor.callproc('BN5', [request.user.ssn])
-            print(cursor.fetchone())
-            return cursor.fetchone()
+            return cursor.fetchall()
         except Exception as e:
-            print(e)
+            raise e
 
 
 def proc_BN6(request):
@@ -100,14 +149,13 @@ def proc_BN7(request):
             print(e)
 
 
-def proc_BN8(request):
+def proc_BN8(request, data):
     with connections['patient'].cursor() as cursor:
         try:
             cursor.callproc('BN8', [request.user.ssn])
-            print(cursor.fetchone())
-            return cursor.fetchone()
+            return cursor.fetchall()
         except Exception as e:
-            print(e)
+            raise e
 
 
 def proc_BN9(request):
@@ -120,11 +168,11 @@ def proc_BN9(request):
             print(e)
 
 
-def proc_BN10(request):
+def proc_BN10(request, data):
     with connections['patient'].cursor() as cursor:
         try:
             cursor.callproc('BN10', [request.user.ssn])
-            print(cursor.fetchone())
-            return cursor.fetchone()
+            print(cursor.description)
+            return cursor.fetchall()
         except Exception as e:
-            print(e)
+            raise e

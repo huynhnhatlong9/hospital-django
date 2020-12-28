@@ -9,6 +9,9 @@
     <script type="text/javascript" src="{% static 'bootstrap/js/jquery-3.5.1.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'HomePage/CSS/style.css' %}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="shortcut icon"
+          href="{% static 'HomePage/doctor.svg' %}"
+          type="image/icon type">
     {% block extraheader %}
     {% endblock extraheader %}
     {% block title %}
@@ -40,6 +43,7 @@
             <a href="{% url 'profile' %}" class="nav-item nav-link">Thông Tin</a>
             {% if user.isDoctor %}
                 <a href="{% url 'patient_info' %}" class="nav-item nav-link">Bệnh Nhân</a>
+                <a href="{% url 'more_info' %}" class="nav-item nav-link">Thông Tin Khác</a>
             {% endif %}
         </div>
         <div class="navbar-nav ml-auto">

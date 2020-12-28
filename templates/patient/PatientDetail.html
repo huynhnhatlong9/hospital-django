@@ -7,22 +7,306 @@
     <link rel="stylesheet" href="{% static 'patient/patient_detail.css' %}">
 {% endblock %}
 {% block content %}
-    <div class="page-heading ml-5 mr-5">
-        <div class="media ">
+    <div class="container">
+        <div class="container mt-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="{% url 'patient_info' %}">PatientInfo</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ patient_info.MA_BN }}</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="media " style="border-bottom: 2px solid #d9d9d9;
+            background-color: rgba(4, 103, 153, 0.4);
+            border-radius: 20px;
+            padding: 20px 20px 20px 20px;">
             <div class="">
                 <a href="#">
-                    <img style="border-radius: 50%" class="bg-dark media-object w-50 p-3" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
+                    <img style="border-radius: 50%" class="bg-dark media-object w-50 p-3"
+                         src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
                 </a>
             </div>
             <div class="mt-4">
-                <h2 class="media-heading">{{ patient_info.0.TEN}}
+                <h2 class="media-heading">{{ patient_info.TEN }}
                     <small> - Profile</small>
                 </h2>
-                <h5 class="text-dark">Mã số: {{ patient_info.0.MA_BN }}</h5>
+                <h6 class="text-dark">Mã số: {{ patient_info.MA_BN }}</h6>
+                <h6 class="text-dark">Loại: {{ loaibenhnhan }}</h6>
+                <h6 class="text-dark">Mã Khám: {{ makham }}</h6>
             </div>
         </div>
-    </div>
-    <div class="page-content">
+        <div class="container jumbotron mt-3 pt-3 bg-light">
+            <fieldset class="border-bottom border-success mb-3">
+                <legend class="text-success d-inline">
+                    <p class="d-inline ">Danh Sách Chẩn Đoán</p>
+                    <button class="float-lg-right d-inline btn btn-success" data-toggle="modal"
+                            data-target="#modal-themchandoan"><i class="fa fa-pencil-square-o"></i> Thêm
+                    </button>
 
+                </legend>
+            </fieldset>
+            <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
+                <thead class="thead-inverse|thead-default table-bordered table-success">
+                <tr>
+                    <th>Mã Khám</th>
+                    <th>Mã Chẩn Đoán</th>
+                    <th>Thời Gian Khám</th>
+                    <th>Mã Bệnh</th>
+                    <th>Nội Dung</th>
+                    <th>Ghi Chú</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for value in chandoanbenh %}
+                    <tr>
+                        <td scope="row">{{ value.0 }}</td>
+                        <td scope="row">{{ value.3 }}</td>
+                        <td scope="row">{{ value.1 }}</td>
+                        <td scope="row">{{ value.4 }}</td>
+                        <td scope="row">{{ value.6 }}</td>
+                        <td scope="row">{{ value.7 }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="container jumbotron mt-3 pt-3 bg-light">
+            <fieldset class="border-bottom border-success mb-3">
+                <legend class="text-success">
+                    <p class="d-inline ">Danh Sách Thuốc Đã Dùng</p>
+                    <button class="float-lg-right d-inline btn btn-success" data-toggle="modal"
+                            data-target="#modal-themthuoc"><i class="fa fa-pencil-square-o"></i> Thêm
+                    </button>
+
+                </legend>
+            </fieldset>
+            <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
+                <thead class="thead-inverse|thead-default table-bordered table-success">
+                <tr>
+                    <th>Mã Khám</th>
+                    <th>Tên Thuốc</th>
+                    <th>Thời Gian Dùng</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for value in danhsachthuoc %}
+                    <tr>
+                        <td scope="row">{{ value.0 }}</td>
+                        <td scope="row">{{ value.1 }}</td>
+                        <td scope="row">{{ value.2 }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <div class="container jumbotron mt-3 pt-3 bg-light">
+            <fieldset class="border-bottom border-success mb-3">
+                <legend class="text-success">Danh Sách Xét Nghiệm</legend>
+            </fieldset>
+            <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
+                <thead class="thead-inverse|thead-default table-bordered table-success">
+                <tr>
+                    <th>Mã Khám</th>
+                    <th>Mã Xét Nghiệm</th>
+                    <th>Tên Xét Nghiệm</th>
+                    <th>Thời Gian Xét Nghiệm</th>
+                    <th>Nhận Xét</th>
+                    <th>Chi Tiết</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for value in danhsachxetnghiem %}
+                    <tr class="list" id="{{ value.1 }}">
+                        <td scope="row">{{ value.0 }}</td>
+                        <td scope="row">{{ value.1 }}</td>
+                        <td scope="row">{{ value.2 }}</td>
+                        <td scope="row">{{ value.3 }}</td>
+                        <td scope="row">{{ value.4 }}</td>
+                        <td scope="row">
+                            <button class="btn btn-outline-primary" value="{{ value.0 }},{{ value.1 }}"><i
+                                    class="fa fa-search"></i> Kết Quả
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="container jumbotron mt-3 pt-3 bg-light">
+            <fieldset class="border-bottom border-success mb-3">
+                <legend class="text-success">Danh Sách Chụp Phim</legend>
+            </fieldset>
+            <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
+                <thead class="thead-inverse|thead-default table-bordered table-success">
+                <tr>
+                    <th>Mã Phim</th>
+                    <th>Loại Phim</th>
+                    <th>Thời Gian Chụp</th>
+                    <th>Mã Bác Sĩ</th>
+                    <th>Nhận Xét</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for value in danhsachchupphim %}
+                    <tr>
+                        <td scope="row">{{ value.0 }}</td>
+                        <td scope="row">{{ value.1 }}</td>
+                        <td scope="row">{{ value.2 }}</td>
+                        <td scope="row">{{ value.3 }}</td>
+                        <td scope="row">{{ value.4 }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
+
+    <div>
+        <!-- Modal -->
+        <div class="modal fade" id="modal-themchandoan" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Chẩn Đoán Mới</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Chẩn Đoán" id="machandoan">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Bệnh"
+                                   id="mabenh">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Nội Dung"
+                                   id="noidung">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Ghi Chú"
+                                   id="ghichu">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-success" id="submit">Thêm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+    </div>
+    <div>
+        <!-- Modal -->
+        <div class="modal fade" id="modal-themthuoc" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm Chế Độ Thuốc</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Chẩn Đoán" id="machandoan">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Bệnh"
+                                   id="mabenh">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Thuốc"
+                                   id="mathuoc">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Liều Dùng"
+                                   id="lieudung">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="datetime-local" class="form-control" placeholder="Thời Gian Dùng"
+                                   id="thoigiandung">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-success" id="submit">Thêm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+    </div>
+    <div>
+        <!-- Modal -->
+        <div class="modal fade" id="modal-xemketqua" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <fieldset class="border-bottom border-success w-100 mr-3">
+                            <legend class="text-success">
+                                <h5 class="d-inline ">Kết Quả Xét Nghiệm</h5>
+                                <button class="float-lg-right d-inline btn btn-success" id="btn-themkqetqua"><i class="fa fa-plus"></i> Thêm
+                                </button>
+
+                            </legend>
+                        </fieldset>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+    </div>
+    <div>
+        <!-- Modal -->
+        <div class="modal fade" id="modal-themketqua" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm Kết Quả</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Chỉ Số" id="machiso">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="number" step="0.001" class="form-control" placeholder="Giá Trị" id="giatri">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Chỉ Số Xét Nghiệm" id="machisoxn">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-success" id="submit">Thêm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+    </div>
+    {% load static %}
+    <script src="{% static 'bootstrap/js/doctor.js' %}">
+
+
+    </script>
 {% endblock %}
