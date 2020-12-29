@@ -20,8 +20,13 @@
             </thead>
             <tbody>
                 <tr>
-                    {% for key,value in info.items %}
-                    <td scope="row">{{ value }}</td>
+                    {% for value in info %}
+                    <td scope="row">{{ value.0 }}</td>
+                    <td scope="row">{{ value.1 }}</td>
+                    <td scope="row">{{ value.2 }}</td>
+                    <td scope="row">{{ value.3 }}</td>
+                    <td scope="row">{{ value.4 }}</td>
+                    <td scope="row">{{ value.5 }}</td>
                     {% endfor %}
                 </tr>
             </tbody>

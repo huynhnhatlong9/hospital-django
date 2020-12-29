@@ -6,19 +6,12 @@ from django.db import connections
 
 # Create your models here.
 def get_doctor_info(ssn):
-    with connections['patient'].cursor() as cursor:
-        query = "select MA_BS,concat(HO,' ',TEN) as TEN,TEN_KHOA,CHUYEN_KHOA,LUONG,CA_LAM_VIEC,EXPYEAR from BACSY join " \
-                "NHANVIEN N on N.MA_NV = BACSY.MA_BS join KHOADIEUTRI K on K.MA_KHOA = N.MA_KHOA where MA_BS='" + str(
-            ssn) + "'; "
-        cursor.execute(query)
-        desc = cursor.description
-        column_names = [col[0] for col in desc]
-        a = cursor.fetchone()
-        if a:
-            data = dict(zip(column_names, a))
-        else:
-            data = None
-    return data
+    with connections['doctor'].cursor() as cursor:
+        try:
+            cursor.callproc('BACSI_INFO', [ssn])
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
 
 
 def danhsachbenhnhan(request):
@@ -27,7 +20,7 @@ def danhsachbenhnhan(request):
             cursor.callproc('DANHSACHBENHNHAN', [request.user.ssn])
             return cursor.fetchall()
         except Exception as e:
-            print(e)
+            raise e
 
 
 def taomoibenhnhan(request, data):
@@ -177,7 +170,7 @@ def themthuoc(request, data):
 def listbenh(request, data):
     with connections['doctor'].cursor() as cursor:
         try:
-            cursor.execute('select * from BENH')
+            cursor.callproc('LIST_BENH', [])
             return cursor.fetchall()
         except Exception as e:
             raise e
@@ -186,7 +179,7 @@ def listbenh(request, data):
 def listthuoc(request, data):
     with connections['doctor'].cursor() as cursor:
         try:
-            cursor.execute('select * from THUOC')
+            cursor.callproc('LIST_THUOC', [])
             print(cursor.description)
             return cursor.fetchall()
         except Exception as e:
@@ -196,8 +189,7 @@ def listthuoc(request, data):
 def themthuocmoi(request, data):
     with connections['doctor'].cursor() as cursor:
         try:
-            query = "insert into THUOC values ('%s','%s','%s')" % (data['mathuoc'], data['tenthuoc'], data['loaithuoc'])
-            cursor.execute(query)
+            cursor.callproc('THEM_THUOC', [data['mathuoc'], data['tenthuoc'], data['loaithuoc']])
             return True
         except Exception as e:
             raise e
@@ -206,19 +198,8 @@ def themthuocmoi(request, data):
 def thembenhmoi(request, data):
     with connections['doctor'].cursor() as cursor:
         try:
-            query = "insert into BENH values ('%s','%s','%s')" % (data['mabenh'], data['tenbenh'], data['mota'])
-            cursor.execute(query)
+            cursor.callproc('THEM_BENH', [data['mabenh'], data['tenbenh'], data['mota']])
             return True
-        except Exception as e:
-            raise e
-
-
-def cacxetnghiemdalam(request, data):
-    with connections['doctor'].cursor() as cursor:
-        try:
-            cursor.execute('select * from THUOC')
-            print(cursor.description)
-            return cursor.fetchall()
         except Exception as e:
             raise e
 

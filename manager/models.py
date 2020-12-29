@@ -5,18 +5,11 @@ from django.db import connections
 # Create your models here.
 def get_manager_info(ssn):
     with connections['manager'].cursor() as cursor:
-        query = "select BS_QUANLY.MA_QL, concat(HO, ' ', TEN) as TEN, NAM_QUAN_LY, LUONG,TEN_KHOA, CA_LAM_VIEC from " \
-                "BS_QUANLY join NHANVIEN N on BS_QUANLY.MA_QL = N.MA_NV join KHOADIEUTRI K on K.MA_KHOA = N.MA_KHOA " \
-                "where BS_QUANLY.MA_QL = '" + str(ssn) + "' "
-        cursor.execute(query)
-        desc = cursor.description
-        column_names = [col[0] for col in desc]
-        a = cursor.fetchone()
-        if a:
-            data = dict(zip(column_names, a))
-        else:
-            data = None
-    return data
+        try:
+            cursor.callproc('QL_INFO', [ssn])
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
 
 
 def bacsi_cangaykhoa(request, data):
@@ -109,7 +102,7 @@ def benhnhanngoaitru_cangay(request, data):
             raise e
 
 
-def xetnghiem_ngaykhoa(request,data):
+def xetnghiem_ngaykhoa(request, data):
     with connections['manager'].cursor() as cursor:
         try:
             cursor.callproc('CAU11',
@@ -118,7 +111,8 @@ def xetnghiem_ngaykhoa(request,data):
         except Exception as e:
             raise e
 
-def xetnghiem_ngay(request,data):
+
+def xetnghiem_ngay(request, data):
     with connections['manager'].cursor() as cursor:
         try:
             cursor.callproc('CAU12',

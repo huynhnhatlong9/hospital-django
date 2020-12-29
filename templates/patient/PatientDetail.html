@@ -13,7 +13,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
                     <li class="breadcrumb-item active"><a href="{% url 'patient_info' %}">PatientInfo</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ patient_info.MA_BN }}</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ patient_info.0.0 }}</li>
                 </ol>
             </nav>
         </div>
@@ -28,10 +28,10 @@
                 </a>
             </div>
             <div class="mt-4">
-                <h2 class="media-heading">{{ patient_info.TEN }}
+                <h2 class="media-heading">{{ patient_info.0.1 }}
                     <small> - Profile</small>
                 </h2>
-                <h6 class="text-dark">Mã số: {{ patient_info.MA_BN }}</h6>
+                <h6 class="text-dark">Mã số: {{ patient_info.0.0 }}</h6>
                 <h6 class="text-dark">Loại: {{ loaibenhnhan }}</h6>
                 <h6 class="text-dark">Mã Khám: {{ makham }}</h6>
             </div>
