@@ -85,7 +85,8 @@ def patient_view(request, id=None, makham=None):
                 res.status_code = 403
                 return res
     data = models.danhsachbenhnhan(request)
-    return render(request, 'homepage/PatientInfo.html', {'data': data})
+    danhsachxuatvien = models.danhsachxuatvien(request, {})
+    return render(request, 'homepage/PatientInfo.html', {'data': data, 'danhsachxuatvien': danhsachxuatvien})
 
 
 @csrf_exempt
