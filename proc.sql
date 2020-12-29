@@ -771,7 +771,8 @@ END$$
 DELIMITER ;
 
 
-
+DROP PROCEDURE IF EXISTS BENHNHAN_CAPNHAT;
+DELIMITER $$
 create
      procedure BENHNHAN_CAPNHAT(IN MABN_IN varchar(20), IN HO_IN varchar(20),
                                                              IN TEN_IN varchar(20), IN TUOI_IN int,
@@ -837,8 +838,11 @@ BEGIN
         B.BHYT        = MATHE_IN
     WHERE MA_BN = MABN_IN;
     COMMIT;
-END;
+END$$
+DELIMITER ;
 
+DROP PROCEDURE IF EXISTS BENHNHAN_DANGKY;
+DELIMITER $$
 create
      procedure BENHNHAN_DANGKY(IN MABN_IN varchar(20), IN HO_IN varchar(20),
                                                             IN TEN_IN varchar(20), IN TUOI_IN int,
@@ -865,8 +869,11 @@ BEGIN
     INSERT INTO BENHNHAN (MA_BN, HO, TEN, TUOI, DAN_TOC, NGHE_NGHIEP, BHYT)
     VALUES (MABN_IN, HO_IN, TEN_IN, TUOI_IN, DAN_TOC_IN, NGHE_NGHIEP_IN, MATHE_IN);
     COMMIT;
-END;
+END$$
+DELIMITER ;
 
+DROP PROCEDURE IF EXISTS BN1_BAOHIEM;
+DELIMITER $$
 create
      procedure BN1_BAOHIEM(IN MABN varchar(20), IN MA_THE varchar(20), IN THOI_HAN date,
                                                         IN NOI_DANG_KY varchar(30))
@@ -876,8 +883,11 @@ BEGIN
         B.THOI_HAN    = IFNULL(NULL, THOI_HAN),
         B.NOI_DANG_KY = IFNULL(NULL, NOI_DANG_KY)
     WHERE B.MA_THE in (select BHYT from BENHNHAN where MA_BN = MABN);
-END;
+END$$
+DELIMITER ;
 
+DROP PROCEDURE IF EXISTS BN1_NHANKHAU;
+DELIMITER $$
 create
      procedure BN1_NHANKHAU(IN MABN varchar(20), IN HO varchar(20), IN TEN varchar(20),
                                                          IN TUOI int, IN DAN_TOC varchar(20),
@@ -896,7 +906,12 @@ BEGIN
 #         B.THOI_HAN    = IFNULL(NULL, THOI_HAN),
 #         B.NOI_DANG_KY = IFNULL(NULL, NOI_DANG_KY)
 #     WHERE B.BN = MABN;
-END;
+END$$
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS CHINHSUA_BANT_NV;
+DELIMITER $$
 create
      procedure CHINHSUA_BANT_NV(IN THOIGIANNHAPVIEN_IN datetime, IN MA_KHOA_IN varchar(20),
                                                              IN MA_BS_IN varchar(20), IN MA_BN_IN varchar(20),
@@ -916,8 +931,11 @@ BEGIN
     ON DUPLICATE KEY UPDATE BENHANNOITRU.SO_GIUONG = SO_GIUONG_IN,
                             BENHANNOITRU.SO_BUONG  = SO_BUONG_IN;
     COMMIT;
-END;
+END$$
+DELIMITER ;
 
+DROP PROCEDURE IF EXISTS CHINHSUA_BANT_XV;
+DELIMITER $$
 create
      procedure CHINHSUA_BANT_XV(IN MA_KHOA_IN varchar(20), IN MA_BS_IN varchar(20),
                                                              IN MA_BN_IN varchar(20),
@@ -953,8 +971,11 @@ BEGIN
           AND B.MA_BN = MA_BN_IN;
     END IF;
     COMMIT;
-END;
+END$$
+DELIMITER ;
 
+DROP PROCEDURE IF EXISTS CHINHSUA_CDDD;
+DELIMITER $$
 create
      procedure CHINHSUA_CDDD(IN MA_CHANDOAN_IN varchar(20), IN MA_BENH_IN varchar(20),
                                                           IN MA_KHAM_IN varchar(20), IN MA_CDDD_IN varchar(20),
@@ -974,8 +995,12 @@ BEGIN
     ON DUPLICATE KEY UPDATE DINHDUONG.CHI_DINH = CHI_DINH_IN,
                             DINHDUONG.GHI_CHU  = GHI_CHU_IN;
     COMMIT;
-END;
+END$$
+DELIMITER ;
 
+
+DROP PROCEDURE IF EXISTS CHINHSUA_CHISO;
+DELIMITER $$
 create
      procedure CHINHSUA_CHISO(IN MA_CHISO_IN varchar(20), IN MA_XN_IN varchar(20),
                                                            IN MA_KHAM_IN varchar(20), IN GIA_TRI_IN double,
@@ -1002,8 +1027,11 @@ BEGIN
                                 CHISO.MA_CHISOXN = MA_CHISOXN_IN;
     END IF;
     COMMIT;
-END;
+END$$
+DELIMITER ;
 
+DROP PROCEDURE IF EXISTS CHINHSUA_KQCHANDOAN;
+DELIMITER $$
 create
      procedure CHINHSUA_KQCHANDOAN(IN MA_CHANDOAN_IN varchar(20),
                                                                 IN MA_BENH_IN varchar(20), IN MA_KHAM_IN varchar(20),
@@ -1030,8 +1058,11 @@ BEGIN
                                 KQCHANDOAN.GHI_CHU  = GHI_CHU_IN;
     END IF;
     COMMIT;
-END;
+END$$
+DELIMITER ;
 
+DROP PROCEDURE IF EXISTS CHINHSUA_PHIM;
+DELIMITER $$
 create
      procedure CHINHSUA_PHIM(IN MA_PHIM_IN varchar(20), IN THOI_GIAN_CHUP_IN datetime,
                                                           IN MA_BS_IN varchar(20), IN MA_KHAM_IN varchar(20),
@@ -1058,8 +1089,11 @@ BEGIN
                                 PHIM.NHAN_XET  = NHAN_XET_IN;
     END IF;
     COMMIT;
-END;
+END$$
+DELIMITER ;
 
+DROP PROCEDURE IF EXISTS CHINHSUA_XN;
+DELIMITER $$
 create
      procedure CHINHSUA_XN(IN MA_XN_IN varchar(20), IN MA_KHAM_IN varchar(20),
                                                         IN THOIGIANXN_IN datetime, IN TEN_XN_IN varchar(20),
@@ -1088,19 +1122,12 @@ BEGIN
                                 XN.NHAN_XET   = NHAN_XET_IN;
     END IF;
     COMMIT;
-END;
+END$$
+DELIMITER ;
 
-create
-     procedure DANHSACHBENHNHAN(IN MABS varchar(20))
-BEGIN
-    SELECT *
-    FROM BENHNHAN
-             join KHAM_BENH_NOI_NGOAI KBNN on BENHNHAN.MA_BN = KBNN.MA_BN
-             join KHAMBENH K on KBNN.MA_KHAM = K.MA_KHAM
-    WHERE KBNN.MA_BS = MABS
-      and BENHNHAN.MA_BN = KBNN.MA_BN;
-END;
 
+DROP PROCEDURE IF EXISTS THEM_BENHNHAN_NGOAITRU;
+DELIMITER $$
 create
      procedure THEM_BENHNHAN_NGOAITRU(IN MAKHAM_IN varchar(20), IN TGKHAM_IN datetime,
                                                                    IN CAKHAM_IN int, IN MABN_IN varchar(20),
@@ -1138,8 +1165,11 @@ BEGIN
         END IF;
     END IF;
     COMMIT;
-END;
+END$$
+DELIMITER ;
 
+DROP PROCEDURE IF EXISTS THEM_BENHNHAN_NOITRU;
+DELIMITER $$
 create
      procedure THEM_BENHNHAN_NOITRU(IN MAKHAM_IN varchar(20), IN TGKHAM_IN datetime,
                                                                  IN CAKHAM_IN int, IN MABN_IN varchar(20),
@@ -1177,8 +1207,12 @@ BEGIN
         END IF;
     END IF;
     COMMIT;
-END;
+END$$
+DELIMITER ;
 
+
+DROP PROCEDURE IF EXISTS THEM_CHEDOTHUOC;
+DELIMITER $$
 create
      procedure THEM_CHEDOTHUOC(IN XOA tinyint(1), IN MA_CHANDOAN_IN varchar(20),
                                                             IN MA_BENH_IN varchar(20), IN MA_KHAM_IN varchar(20),
@@ -1208,8 +1242,11 @@ BEGIN
         VALUES (MA_CHANDOAN_IN, MA_BENH_IN, MA_KHAM_IN, MA_THUOC_IN, LIEU_DUNG_IN, THOI_GIAN_DUNG_IN);
     END IF;
     COMMIT;
-END;
+END$$
+DELIMITER ;
 
+DROP PROCEDURE IF EXISTS THEM_TRIEUCHUNG;
+DELIMITER $$
 create
      procedure THEM_TRIEUCHUNG(IN XOA tinyint(1), IN MA_CHANDOAN_IN varchar(20),
                                                             IN MA_BENH_IN varchar(20), IN MA_KHAM_IN varchar(20),
@@ -1239,7 +1276,8 @@ BEGIN
         VALUES (TENTRIEUCHUNG_IN, MO_TA_IN, MUC_DO_IN, MA_CHANDOAN_IN, MA_BENH_IN, MA_KHAM_IN);
     END IF;
     COMMIT;
-END;
+END$$
+DELIMITER ;
 
 
 
@@ -1304,6 +1342,8 @@ GRANT EXECUTE ON PROCEDURE HOSPITAL.BACSI_INFO TO 'bacsy'@'localhost';
 GRANT EXECUTE ON PROCEDURE HOSPITAL.XEM_XN_MABS TO 'bacsy'@'localhost';
 GRANT EXECUTE ON PROCEDURE HOSPITAL.XEM_PHIM_MAKHAM TO 'bacsy'@'localhost';
 GRANT EXECUTE ON PROCEDURE HOSPITAL.XEM_PHIM_MABS TO 'bacsy'@'localhost';
+GRANT EXECUTE ON PROCEDURE HOSPITAL.CHINHSUA_CDDD TO 'bacsy'@'localhost';
+GRANT EXECUTE ON PROCEDURE HOSPITAL.THEM_TRIEUCHUNG TO 'bacsy'@'localhost';
 
 
 REVOKE ALL PRIVILEGES ON `HOSPITAL`.* from 'quanly'@'localhost';
