@@ -71,6 +71,7 @@ $('.btn-listbenhnhan').on('click', function (e) {
         mabenh: mabenh,
         mabacsi: mabacsi
     }
+    $('#modal-listbenhnhan #tatca').prop('checked',true)
     let check = true;
     $('#modal-listbenhnhan').modal();
     if (check) {

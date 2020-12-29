@@ -79,3 +79,9 @@ $('#modal-capnhatbaohiem #submit').on('click', function (event) {
     }
 
 });
+
+$('#gannhat').on('change',function (e){
+    a=$('#body').children()[0]
+    $('#body').children().remove()
+    $('#body').append(a)
+})

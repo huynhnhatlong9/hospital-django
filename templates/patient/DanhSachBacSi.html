@@ -14,7 +14,11 @@
     </div>
     <div class="container jumbotron mt-3 pt-3 bg-light">
         <fieldset class="border-bottom border-success mb-3">
-            <legend class="text-success">Danh Sách Xét Nghiệm</legend>
+            <legend class="text-success"><p class="d-inline ">Danh Sách Bác Sĩ</p>
+                <div class="float-right">
+                <input type="radio" name="gannhat" id="gannhat">
+                <label for="gannhat" ><h6 class="text-dark">Gần Nhất</h6></label></div>
+            </legend>
         </fieldset>
         <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
             <thead class="thead-inverse|thead-default table-bordered table-success">
@@ -24,7 +28,7 @@
                 <th>Thời Gian Khám</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="body"    >
             {% for value in danhsachbacsi %}
                 <tr>
                     <td scope="row">{{ value.1 }}</td>
@@ -35,6 +39,8 @@
             </tbody>
         </table>
     </div>
+    {% load static %}
+    <script src="{% static 'bootstrap/js/patient.js' %}"></script>
 {% endblock %}
 
 

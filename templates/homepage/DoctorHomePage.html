@@ -230,6 +230,48 @@
             </div>
         </div>
         <!-- End Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="modal-xuatvien" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Bệnh Án Xuất Viện</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Khoa" id="makhoa">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Bác Sĩ Chỉ Định Nhập Viện"
+                                   id="bacsinhapvien">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Mã Bệnh Nhân"
+                                   id="mabenhnhan">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="datetime-local" class="form-control" placeholder="Thời Gian Xuất Viện"
+                                   id="thoigianxuatvien">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Tình Trạng Xuất Viện" id="tinhtrangxuatvien">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Ghi Chú" id="ghichu">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-primary" id="submit">Thêm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
         <div class="container">
             <div class="row">
                 <div class="col-md-12" data-toggle="modal" data-target="#modal-dangkibenhnhan">
@@ -267,6 +309,13 @@
                             brand across all mobile platform styles.</p>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="card card-3" data-toggle="modal" data-target="#modal-xuatvien">
+                        <h3><i class="fa fa-plus"></i> Xuất Viện</h3>
+                        <p>Learn how to easily customize and modify your app’s design to fit your
+                            brand across all mobile platform styles.</p>
+                    </div>
+                </div>
             </div>
             <div class="row mt-4">
                 <div class="col-md-6">
@@ -283,6 +332,7 @@
                         </button>
                     </a>
                 </div>
+
             </div>
         </div>
     </div>

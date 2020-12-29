@@ -4,11 +4,14 @@ from django.contrib.auth import authenticate, login as alogin
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
+
 from account.forms import RegistrationForm, LoginForm
 from django.db import connections
 from django.contrib import messages
 from patient import models as patient_model
 from doctor import models as doctor_model
+from manager import models as manager_model
 
 
 # Create your views here.
@@ -37,6 +40,7 @@ def check_ssn(ssn, user_type):
     return False
 
 
+@csrf_exempt
 def homeView(request):
     if str(request.user) == 'AnonymousUser':
         return render(request, template_name='homepage/HomePage.html')
@@ -106,8 +110,117 @@ def homeView(request):
                     respne = JsonResponse({"success": False, "error": "Không thể Query"})
                     respne.status_code = 403
                     return respne
+            if request.POST['type'] == 'xuatvien':
+                print("ok")
+                try:
+                    doctor_model.xuatvien(request, json.loads(request.POST['data']))
+                    res = JsonResponse({"success": True})
+                    res.status_code = 200
+                    return res
+                except Exception as e:
+                    res = JsonResponse({'error': str(e)})
+                    res.status_code = 403
+                    return res
         return render(request, template_name='homepage/DoctorHomePage.html')
     if request.user.isManager:
+        if request.POST:
+            if request.POST['type'] == 'thongkebacsi':
+                data = json.loads(request.POST['data'])
+                if data['ca'] != "" and data['ngay'] != "" and data['khoa'] != "":
+                    try:
+                        info = manager_model.bacsi_cangaykhoa(request, data)
+                        res = JsonResponse({'data': info})
+                        res.status_code = 200
+                        return res
+                    except Exception as e:
+                        res = JsonResponse({'error': str(e)})
+                        res.status_code = 403
+                        return res
+                if data['ca'] == "" and data['ngay'] != "" and data['khoa'] != "":
+                    try:
+                        info = manager_model.bacsi_ngaykhoa(request, data)
+                        res = JsonResponse({'data': info})
+                        res.status_code = 200
+                        return res
+                    except Exception as e:
+                        res = JsonResponse({'error': str(e)})
+                        res.status_code = 403
+                        return res
+                if data['ca'] != "" and data['ngay'] != "" and data['khoa'] == "":
+                    try:
+                        info = manager_model.bacsi_cangay(request, data)
+                        res = JsonResponse({'data': info})
+                        res.status_code = 200
+                        return res
+                    except Exception as e:
+                        res = JsonResponse({'error': str(e)})
+                        res.status_code = 403
+                        return res
+                if data['ca'] == "" and data['ngay'] != "" and data['khoa'] == "":
+                    try:
+                        info = manager_model.bacsi_ngay(request, data)
+                        res = JsonResponse({'data': info})
+                        res.status_code = 200
+                        return res
+                    except Exception as e:
+                        res = JsonResponse({'error': str(e)})
+                        res.status_code = 403
+                        return res
+                res = JsonResponse({'error': 'Điền Đúng Yêu Cầu!'})
+                res.status_code = 403
+                return res
+            if request.POST['type'] == 'thongkebenhnhan':
+                data = json.loads(request.POST['data'])
+                if data['ca']!="" and data['ngay']!="" and data['khoa']!="" and data['noingoai']=='Cả Hai':
+                    try:
+                        info = manager_model.benhnhanall_cangaykhoa(request, data)
+                        res = JsonResponse({'data': info})
+                        res.status_code = 200
+                        return res
+                    except Exception as e:
+                        res = JsonResponse({'error': str(e)})
+                        res.status_code = 403
+                        return res
+                if data['ca']!="" and data['ngay']!="" and data['khoa']!="" and data['noingoai']=='Nội Trú':
+                    try:
+                        info = manager_model.benhnhannoitru_cangaykhoa(request, data)
+                        res = JsonResponse({'data': info})
+                        res.status_code = 200
+                        return res
+                    except Exception as e:
+                        res = JsonResponse({'error': str(e)})
+                        res.status_code = 403
+                        return res
+                if data['ca']!="" and data['ngay']!="" and data['khoa']!="" and data['noingoai']=='Ngoại Trú':
+                    try:
+                        info = manager_model.benhnhanngoaitru_cangaykhoa(request, data)
+                        res = JsonResponse({'data': info})
+                        res.status_code = 200
+                        return res
+                    except Exception as e:
+                        res = JsonResponse({'error': str(e)})
+                        res.status_code = 403
+                        return res
+                if data['ca']!="" and data['ngay']!="" and data['khoa']=="" and data['noingoai']=='Nội Trú':
+                    try:
+                        info = manager_model.benhnhannoitru_cangay(request, data)
+                        res = JsonResponse({'data': info})
+                        res.status_code = 200
+                        return res
+                    except Exception as e:
+                        res = JsonResponse({'error': str(e)})
+                        res.status_code = 403
+                        return res
+                if data['ca']!="" and data['ngay']!="" and data['khoa']=="" and data['noingoai']=='Ngoại Trú':
+                    try:
+                        info = manager_model.benhnhanngoaitru_cangay(request, data)
+                        res = JsonResponse({'data': info})
+                        res.status_code = 200
+                        return res
+                    except Exception as e:
+                        res = JsonResponse({'error': str(e)})
+                        res.status_code = 403
+                        return res
         return render(request, template_name='homepage/ManagerHomePage.html')
 
 

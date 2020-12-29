@@ -253,11 +253,27 @@ def listbenhnhanofbenh(request, data):
         except Exception as e:
             raise e
 
+
 def listbenhnhanofbenhbatthuong(request, data):
     with connections['doctor'].cursor() as cursor:
         try:
             cursor.callproc('BS9',
                             [data['mabenh'], data['mabacsi']])
             return cursor.fetchall()
+        except Exception as e:
+            raise e
+
+
+def xuatvien(request, data):
+    print([data['makhoa'], data['mabacsinhapvien'], data['mabenhnhan'], request.user.ssn,
+                             data['thoigianxuatvien'],
+                             data['tinhtrang'], data['ghichu']])
+    with connections['doctor'].cursor() as cursor:
+        try:
+            cursor.callproc('CHINHSUA_BANT_XV',
+                            [data['makhoa'], data['mabacsinhapvien'], data['mabenhnhan'], request.user.ssn,
+                             data['thoigianxuatvien'],
+                             data['tinhtrang'], data['ghichu']])
+            return True
         except Exception as e:
             raise e

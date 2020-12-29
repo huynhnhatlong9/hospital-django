@@ -300,7 +300,7 @@ $('#modal-themchandoan #submit').on('click', function (e) {
         noidung: $('#modal-themchandoan #noidung').val(),
         ghichu: $('#modal-themchandoan #ghichu').val()
     }
-    check = validate(data)
+    let check = validate(data)
     if (check) {
         $.ajax({
             url: "",
@@ -329,7 +329,7 @@ $('#modal-themthuoc #submit').on('click', function (e) {
         thoihandung: $('#modal-themthuoc #thoigiandung').val()
     }
     console.log(data)
-    check = validate(data)
+    let check = validate(data);
     if (check) {
         $.ajax({
             url: "",
@@ -412,7 +412,7 @@ $('#modal-themketqua #submit').on('click', function (e) {
         'giatri': $('#modal-themketqua #giatri').val(),
         'machisoxn': $('#modal-themketqua #machisoxn').val()
     }
-    check = validate(data)
+    let check = validate(data)
     if (check) {
         $.ajax({
             url: "",
@@ -434,6 +434,36 @@ $('#modal-themketqua #submit').on('click', function (e) {
 $('.modal').on('hidden.bs.modal', function (e) {
     $(this).html("");
 });
+
+
+$('#modal-xuatvien #submit').on('click', function (e) {
+    data = {
+        'makhoa': $('#modal-xuatvien #makhoa').val(),
+        'mabacsinhapvien': $('#modal-xuatvien #bacsinhapvien').val(),
+        'mabenhnhan': $('#modal-xuatvien #mabenhnhan').val(),
+        'thoigianxuatvien': $('#modal-xuatvien #thoigianxuatvien').val(),
+        'tinhtrang': $('#modal-xuatvien #tinhtrangxuatvien').val(),
+        'ghichu': $('#modal-xuatvien #ghichu').val()
+    }
+    let check = validate(data)
+    if (check) {
+        $.ajax({
+            url: "",
+            type: 'post',
+            data: {
+                type: "xuatvien",
+                data: JSON.stringify(data)
+            },
+            success: function (response) {
+                toastr.success('Thêm Thành Công!');
+                $('#modal-themketqua').modal('hide');
+            },
+            error: function (data) {
+                toastr.error(data.responseJSON.error);
+            }
+        })
+    }
+})
 
 
 
