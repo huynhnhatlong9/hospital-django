@@ -770,8 +770,493 @@ BEGIN
 END$$
 DELIMITER ;
 
+
+
+create
+     procedure BENHNHAN_CAPNHAT(IN MABN_IN varchar(20), IN HO_IN varchar(20),
+                                                             IN TEN_IN varchar(20), IN TUOI_IN int,
+                                                             IN DAN_TOC_IN varchar(20), IN NGHE_NGHIEP_IN varchar(30),
+                                                             IN MATHE_IN varchar(20), IN THOI_HAN_IN date,
+                                                             IN NOI_DANG_KY_IN varchar(30))
+BEGIN
+    DECLARE X VARCHAR(20);
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        BEGIN
+            ROLLBACK;
+            RESIGNAL;
+            -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong the hoan tat cap nhat!';
+        END;
+
+    START TRANSACTION;
+
+    SET X = (SELECT BHYT FROM BENHNHAN WHERE MA_BN = MABN_IN);
+
+    IF (X IS NULL) THEN
+        IF (MATHE_IN IS NOT NULL) THEN
+            INSERT INTO BHYT (MA_THE, THOI_HAN, NOI_DANG_KY)
+            VALUES (MATHE_IN, THOI_HAN_IN, NOI_DANG_KY_IN);
+        END IF;
+    ELSE
+        IF (MATHE_IN IS NULL) THEN
+            DELETE FROM BHYT WHERE MA_THE = X;
+        ELSE
+            UPDATE BHYT B
+            SET B.MA_THE      = MATHE_IN,
+                B.THOI_HAN    = THOI_HAN_IN,
+                B.NOI_DANG_KY = NOI_DANG_KY_IN
+            WHERE B.MA_THE = X;
+        END IF;
+    END IF;
+
+    -- 	IF (MATHE IS NOT NULL) THEN
+-- 		IF NOT EXISTS (SELECT * FROM BHYT WHERE MA_THE = MATHE) THEN
+-- 			INSERT INTO BHYT (MA_THE, THOI_HAN, NOI_DANG_KY)
+-- 			VALUES (MATHE, THOI_HAN, NOI_DANG_KY);
+
+-- 		ELSEIF (SELECT MA_THE FROM BHYT WHERE BN = MABN) != MATHE THEN
+-- 			DELETE FROM BHYT B WHERE B.BN = MABN;
+
+-- 			INSERT INTO BHYT (MA_THE, THOI_HAN, NOI_DANG_KY, BN)
+-- 			VALUES (MATHE, THOI_HAN, NOI_DANG_KY, MABN);
+-- 		ELSE
+-- 			UPDATE BHYT B
+-- 			SET B.MA_THE      = MA_THE,
+-- 				B.THOI_HAN    = THOI_HAN,
+-- 				B.NOI_DANG_KY = NOI_DANG_KY
+-- 			WHERE B.BN = MABN;
+-- 		END IF;
+--     END IF;
+
+    -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'GOES HERE';
+    UPDATE BENHNHAN B
+    SET B.HO          = HO_IN,
+        B.TEN         = TEN_IN,
+        B.TUOI        = TUOI_IN,
+        B.DAN_TOC     = DAN_TOC_IN,
+        B.NGHE_NGHIEP = NGHE_NGHIEP_IN,
+        B.BHYT        = MATHE_IN
+    WHERE MA_BN = MABN_IN;
+    COMMIT;
+END;
+
+create
+     procedure BENHNHAN_DANGKY(IN MABN_IN varchar(20), IN HO_IN varchar(20),
+                                                            IN TEN_IN varchar(20), IN TUOI_IN int,
+                                                            IN DAN_TOC_IN varchar(20), IN NGHE_NGHIEP_IN varchar(30),
+                                                            IN MATHE_IN varchar(20), IN THOI_HAN_IN date,
+                                                            IN NOI_DANG_KY_IN varchar(30))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        BEGIN
+            ROLLBACK;
+            RESIGNAL;
+            -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong the hoan tat dang ky!';
+        END;
+
+    START TRANSACTION;
+
+    IF (MATHE_IN IS NOT NULL) THEN
+        INSERT INTO BHYT (MA_THE, THOI_HAN, NOI_DANG_KY)
+        VALUES (MATHE_IN, THOI_HAN_IN, NOI_DANG_KY_IN)
+        ON DUPLICATE KEY UPDATE BHYT.THOI_HAN    = THOI_HAN_IN,
+                                BHYT.NOI_DANG_KY = NOI_DANG_KY_IN;
+    END IF;
+
+    INSERT INTO BENHNHAN (MA_BN, HO, TEN, TUOI, DAN_TOC, NGHE_NGHIEP, BHYT)
+    VALUES (MABN_IN, HO_IN, TEN_IN, TUOI_IN, DAN_TOC_IN, NGHE_NGHIEP_IN, MATHE_IN);
+    COMMIT;
+END;
+
+create
+     procedure BN1_BAOHIEM(IN MABN varchar(20), IN MA_THE varchar(20), IN THOI_HAN date,
+                                                        IN NOI_DANG_KY varchar(30))
+BEGIN
+    UPDATE BHYT B
+    SET B.MA_THE      = MA_THE,
+        B.THOI_HAN    = IFNULL(NULL, THOI_HAN),
+        B.NOI_DANG_KY = IFNULL(NULL, NOI_DANG_KY)
+    WHERE B.MA_THE in (select BHYT from BENHNHAN where MA_BN = MABN);
+END;
+
+create
+     procedure BN1_NHANKHAU(IN MABN varchar(20), IN HO varchar(20), IN TEN varchar(20),
+                                                         IN TUOI int, IN DAN_TOC varchar(20),
+                                                         IN NGHE_NGHIEP varchar(30))
+BEGIN
+    UPDATE BENHNHAN B
+    SET B.HO          = IFNULL(NULL, HO),
+        B.TEN         = IFNULL(NULL, TEN),
+        B.TUOI        = IFNULL(NULL, TUOI),
+        B.DAN_TOC     = IFNULL(NULL, DAN_TOC),
+        B.NGHE_NGHIEP = IFNULL(NULL, NGHE_NGHIEP)
+    WHERE MA_BN = MABN;
+
+    #     UPDATE BHYT B
+#     SET B.MA_THE      = MA_THE,
+#         B.THOI_HAN    = IFNULL(NULL, THOI_HAN),
+#         B.NOI_DANG_KY = IFNULL(NULL, NOI_DANG_KY)
+#     WHERE B.BN = MABN;
+END;
+create
+     procedure CHINHSUA_BANT_NV(IN THOIGIANNHAPVIEN_IN datetime, IN MA_KHOA_IN varchar(20),
+                                                             IN MA_BS_IN varchar(20), IN MA_BN_IN varchar(20),
+                                                             IN SO_GIUONG_IN int, IN SO_BUONG_IN int)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        BEGIN
+            ROLLBACK;
+            RESIGNAL;
+            -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong the hoan tat them ho so kham benh!';
+        END;
+
+    START TRANSACTION;
+
+    INSERT INTO BENHANNOITRU (THOIGIANNHAPVIEN, MA_KHOA, MA_BS, MA_BN, SO_GIUONG, SO_BUONG)
+    VALUES (THOIGIANNHAPVIEN_IN, MA_KHOA_IN, MA_BS_IN, MA_BN_IN, SO_GIUONG_IN, SO_BUONG_IN)
+    ON DUPLICATE KEY UPDATE BENHANNOITRU.SO_GIUONG = SO_GIUONG_IN,
+                            BENHANNOITRU.SO_BUONG  = SO_BUONG_IN;
+    COMMIT;
+END;
+
+create
+     procedure CHINHSUA_BANT_XV(IN MA_KHOA_IN varchar(20), IN MA_BS_IN varchar(20),
+                                                             IN MA_BN_IN varchar(20),
+                                                             IN MABS_CHIDINH_XUATVIEN_IN varchar(20),
+                                                             IN TG_XV_IN datetime, IN TINHTRANG_XV_IN varchar(100),
+                                                             IN GHI_CHU_XV_IN varchar(50))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        BEGIN
+            ROLLBACK;
+            RESIGNAL;
+            -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong the hoan tat them ho so kham benh!';
+        END;
+
+    START TRANSACTION;
+
+    IF NOT EXISTS(SELECT *
+                  FROM BENHANNOITRU B
+                  WHERE B.MA_KHOA = MA_KHOA_IN
+                    AND B.MA_BS = MA_BS_IN
+                    AND B.MA_BN = MA_BN_IN) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong tim thay benh an!';
+    ELSEIF (MABS_CHIDINH_XUATVIEN_IN IS NULL OR TG_XV_IN IS NULL) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Thieu ma bs xuat vien hoac thoi gian xuat vien!';
+    ELSE
+        UPDATE BENHANNOITRU B
+        SET B.MABS_CHIDINH_XUATVIEN = MABS_CHIDINH_XUATVIEN_IN,
+            B.TINHTRANG_XV          = TINHTRANG_XV_IN,
+            B.TG_XV                 = TG_XV_IN,
+            B.GHI_CHU_XV            = GHI_CHU_XV_IN
+        WHERE B.MA_KHOA = MA_KHOA_IN
+          AND B.MA_BS = MA_BS_IN
+          AND B.MA_BN = MA_BN_IN;
+    END IF;
+    COMMIT;
+END;
+
+create
+     procedure CHINHSUA_CDDD(IN MA_CHANDOAN_IN varchar(20), IN MA_BENH_IN varchar(20),
+                                                          IN MA_KHAM_IN varchar(20), IN MA_CDDD_IN varchar(20),
+                                                          IN CHI_DINH_IN varchar(100), IN GHI_CHU_IN varchar(50))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        BEGIN
+            ROLLBACK;
+            RESIGNAL;
+            -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong the hoan tat them ho so kham benh!';
+        END;
+
+    START TRANSACTION;
+
+    INSERT INTO DINHDUONG
+    VALUES (MA_CHANDOAN_IN, MA_BENH_IN, MA_KHAM_IN, MA_CDDD_IN, CHI_DINH_IN, GHI_CHU_IN)
+    ON DUPLICATE KEY UPDATE DINHDUONG.CHI_DINH = CHI_DINH_IN,
+                            DINHDUONG.GHI_CHU  = GHI_CHU_IN;
+    COMMIT;
+END;
+
+create
+     procedure CHINHSUA_CHISO(IN MA_CHISO_IN varchar(20), IN MA_XN_IN varchar(20),
+                                                           IN MA_KHAM_IN varchar(20), IN GIA_TRI_IN double,
+                                                           IN MA_CHISOXN_IN varchar(20))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        BEGIN
+            ROLLBACK;
+            RESIGNAL;
+            -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong the hoan tat them ho so kham benh!';
+        END;
+
+    START TRANSACTION;
+
+    IF (MA_KHAM_IN IS NULL OR MA_XN_IN IS NULL) THEN
+        UPDATE CHISO
+        SET CHISO.GIA_TRI    = GIA_TRI_IN,
+            CHISO.MA_CHISOXN = MA_CHISOXN_IN
+        WHERE CHISO.MA_CHISO = MA_CHISO_IN;
+    ELSE
+        INSERT INTO CHISO (MA_CHISO, MA_XN, MA_KHAM, GIA_TRI, MA_CHISOXN)
+        VALUES (MA_CHISO_IN, MA_XN_IN, MA_KHAM_IN, GIA_TRI_IN, MA_CHISOXN_IN)
+        ON DUPLICATE KEY UPDATE CHISO.GIA_TRI    = GIA_TRI_IN,
+                                CHISO.MA_CHISOXN = MA_CHISOXN_IN;
+    END IF;
+    COMMIT;
+END;
+
+create
+     procedure CHINHSUA_KQCHANDOAN(IN MA_CHANDOAN_IN varchar(20),
+                                                                IN MA_BENH_IN varchar(20), IN MA_KHAM_IN varchar(20),
+                                                                IN NOI_DUNG_IN varchar(100), IN GHI_CHU_IN varchar(50))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        BEGIN
+            ROLLBACK;
+            RESIGNAL;
+            -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong the hoan tat them ho so kham benh!';
+        END;
+
+    START TRANSACTION;
+
+    IF (MA_KHAM_IN IS NULL OR MA_BENH_IN IS NULL) THEN
+        UPDATE KQCHANDOAN
+        SET KQCHANDOAN.NOI_DUNG = NOI_DUNG_IN,
+            KQCHANDOAN.GHI_CHU  = GHI_CHU_IN
+        WHERE KQCHANDOAN.MA_CHANDOAN = MA_CHANDOAN_IN;
+    ELSE
+        INSERT INTO KQCHANDOAN
+        VALUES (MA_CHANDOAN_IN, MA_BENH_IN, MA_KHAM_IN, NOI_DUNG_IN, GHI_CHU_IN)
+        ON DUPLICATE KEY UPDATE KQCHANDOAN.NOI_DUNG = NOI_DUNG_IN,
+                                KQCHANDOAN.GHI_CHU  = GHI_CHU_IN;
+    END IF;
+    COMMIT;
+END;
+
+create
+     procedure CHINHSUA_PHIM(IN MA_PHIM_IN varchar(20), IN THOI_GIAN_CHUP_IN datetime,
+                                                          IN MA_BS_IN varchar(20), IN MA_KHAM_IN varchar(20),
+                                                          IN LOAI_PHIM_IN varchar(20), IN NHAN_XET_IN varchar(100))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        BEGIN
+            ROLLBACK;
+            RESIGNAL;
+            -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong the hoan tat them ho so kham benh!';
+        END;
+
+    START TRANSACTION;
+
+    IF (MA_BS_IN IS NULL OR THOI_GIAN_CHUP_IN IS NULL OR MA_KHAM_IN IS NULL) THEN
+        UPDATE PHIM P
+        SET P.LOAI_PHIM = LOAI_PHIM_IN,
+            P.NHAN_XET  = NHAN_XET_IN
+        WHERE P.MA_PHIM = MA_PHIM_IN;
+    ELSE
+        INSERT INTO PHIM
+        VALUES (MA_PHIM_IN, MA_KHAM_IN, LOAI_PHIM_IN, THOI_GIAN_CHUP_IN, MA_BS_IN, NHAN_XET_IN)
+        ON DUPLICATE KEY UPDATE PHIM.LOAI_PHIM = LOAI_PHIM_IN,
+                                PHIM.NHAN_XET  = NHAN_XET_IN;
+    END IF;
+    COMMIT;
+END;
+
+create
+     procedure CHINHSUA_XN(IN MA_XN_IN varchar(20), IN MA_KHAM_IN varchar(20),
+                                                        IN THOIGIANXN_IN datetime, IN TEN_XN_IN varchar(20),
+                                                        IN NHAN_XET_IN varchar(100))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        BEGIN
+            ROLLBACK;
+            RESIGNAL;
+            -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong the hoan tat them ho so kham benh!';
+        END;
+
+    START TRANSACTION;
+
+    IF (MA_KHAM_IN IS NULL) THEN
+        UPDATE XN
+        SET XN.THOIGIANXN = THOIGIANXN_IN,
+            XN.TEN_XN     = TEN_XN_IN,
+            XN.NHAN_XET   = NHAN_XET_IN
+        WHERE XN.MA_XN = MA_XN_IN;
+    ELSE
+        INSERT INTO XN
+        VALUES (MA_XN_IN, MA_KHAM_IN, THOIGIANXN_IN, TEN_XN_IN, NHAN_XET_IN)
+        ON DUPLICATE KEY UPDATE XN.THOIGIANXN = THOIGIANXN_IN,
+                                XN.TEN_XN     = TEN_XN_IN,
+                                XN.NHAN_XET   = NHAN_XET_IN;
+    END IF;
+    COMMIT;
+END;
+
+create
+     procedure DANHSACHBENHNHAN(IN MABS varchar(20))
+BEGIN
+    SELECT *
+    FROM BENHNHAN
+             join KHAM_BENH_NOI_NGOAI KBNN on BENHNHAN.MA_BN = KBNN.MA_BN
+             join KHAMBENH K on KBNN.MA_KHAM = K.MA_KHAM
+    WHERE KBNN.MA_BS = MABS
+      and BENHNHAN.MA_BN = KBNN.MA_BN;
+END;
+
+create
+     procedure THEM_BENHNHAN_NGOAITRU(IN MAKHAM_IN varchar(20), IN TGKHAM_IN datetime,
+                                                                   IN CAKHAM_IN int, IN MABN_IN varchar(20),
+                                                                   IN MABS_IN varchar(20))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        BEGIN
+            ROLLBACK;
+            RESIGNAL;
+            -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong the hoan tat them ho so kham benh!';
+        END;
+
+    START TRANSACTION;
+
+    IF NOT EXISTS(SELECT * FROM NGOAITRU WHERE MA_BN = MABN_IN) THEN
+        INSERT INTO NGOAITRU VALUES (MABN_IN);
+    END IF;
+
+    IF NOT EXISTS(SELECT * FROM KHAMBENH WHERE MA_KHAM = MAKHAM_IN) THEN
+        INSERT INTO KHAMBENH (MA_KHAM, THOI_GIAN_KHAM, CA_KHAM)
+        VALUES (MAKHAM_IN, TGKHAM_IN, CAKHAM_IN);
+
+        INSERT INTO KBNGOAITRU (MA_KHAM, MA_BS, MA_BN)
+        VALUES (MAKHAM_IN, MABS_IN, MABN_IN);
+    ELSE
+        UPDATE KHAMBENH
+        SET THOI_GIAN_KHAM = TGKHAM_IN,
+            CA_KHAM        = CAKHAM_IN
+        WHERE MA_KHAM = MAKHAM_IN;
+
+        -- JUST MAKE SURE
+        IF NOT EXISTS(SELECT * FROM KBNGOAITRU WHERE MA_KHAM = MAKHAM_IN) THEN
+            INSERT INTO KBNGOAITRU (MA_KHAM, MA_BS, MA_BN)
+            VALUES (MAKHAM_IN, MABS_IN, MABN_IN);
+        END IF;
+    END IF;
+    COMMIT;
+END;
+
+create
+     procedure THEM_BENHNHAN_NOITRU(IN MAKHAM_IN varchar(20), IN TGKHAM_IN datetime,
+                                                                 IN CAKHAM_IN int, IN MABN_IN varchar(20),
+                                                                 IN MABS_IN varchar(20))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        BEGIN
+            ROLLBACK;
+            RESIGNAL;
+            -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong the hoan tat them ho so kham benh!';
+        END;
+
+    START TRANSACTION;
+
+    IF NOT EXISTS(SELECT * FROM NOITRU WHERE MA_BN = MABN_IN) THEN
+        INSERT INTO NOITRU VALUES (MABN_IN);
+    END IF;
+
+    IF NOT EXISTS(SELECT * FROM KHAMBENH WHERE MA_KHAM = MAKHAM_IN) THEN
+        INSERT INTO KHAMBENH (MA_KHAM, THOI_GIAN_KHAM, CA_KHAM)
+        VALUES (MAKHAM_IN, TGKHAM_IN, CAKHAM_IN);
+
+        INSERT INTO KBNOITRU (MA_KHAM, MA_BS, MA_BN)
+        VALUES (MAKHAM_IN, MABS_IN, MABN_IN);
+    ELSE
+        UPDATE KHAMBENH
+        SET THOI_GIAN_KHAM = TGKHAM_IN,
+            CA_KHAM        = CAKHAM_IN
+        WHERE MA_KHAM = MAKHAM_IN;
+
+        -- JUST MAKE SURE
+        IF NOT EXISTS(SELECT * FROM KBNOITRU WHERE MA_KHAM = MAKHAM_IN) THEN
+            INSERT INTO KBNOITRU (MA_KHAM, MA_BS, MA_BN)
+            VALUES (MAKHAM_IN, MABS_IN, MABN_IN);
+        END IF;
+    END IF;
+    COMMIT;
+END;
+
+create
+     procedure THEM_CHEDOTHUOC(IN XOA tinyint(1), IN MA_CHANDOAN_IN varchar(20),
+                                                            IN MA_BENH_IN varchar(20), IN MA_KHAM_IN varchar(20),
+                                                            IN MA_THUOC_IN varchar(20), IN LIEU_DUNG_IN int,
+                                                            IN THOI_GIAN_DUNG_IN datetime)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        BEGIN
+            ROLLBACK;
+            RESIGNAL;
+            -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong the hoan tat them ho so kham benh!';
+        END;
+
+    START TRANSACTION;
+
+    IF XOA THEN
+        DELETE
+        FROM CHEDOTHUOC
+        WHERE MA_CHANDOAN = MA_CHANDOAN_IN
+          AND MA_BENH = MA_BENH_IN
+          AND MA_KHAM = MA_KHAM_IN
+          AND MA_THUOC = MA_THUOC_IN
+          AND LIEU_DUNG = LIEU_DUNG_IN
+          AND THOI_GIAN_DUNG = THOI_GIAN_DUNG_IN;
+    ELSE
+        INSERT INTO CHEDOTHUOC
+        VALUES (MA_CHANDOAN_IN, MA_BENH_IN, MA_KHAM_IN, MA_THUOC_IN, LIEU_DUNG_IN, THOI_GIAN_DUNG_IN);
+    END IF;
+    COMMIT;
+END;
+
+create
+     procedure THEM_TRIEUCHUNG(IN XOA tinyint(1), IN MA_CHANDOAN_IN varchar(20),
+                                                            IN MA_BENH_IN varchar(20), IN MA_KHAM_IN varchar(20),
+                                                            IN TENTRIEUCHUNG_IN varchar(20), IN MO_TA_IN varchar(30),
+                                                            IN MUC_DO_IN varchar(30))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+        BEGIN
+            ROLLBACK;
+            RESIGNAL;
+            -- SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Khong the hoan tat them ho so kham benh!';
+        END;
+
+    START TRANSACTION;
+
+    IF XOA THEN
+        DELETE
+        FROM TRIEUCHUNG
+        WHERE TENTRIEUCHUNG = TENTRIEUCHUNG_IN
+          AND MO_TA = MO_TA_IN
+          AND MUC_DO = MUC_DO_IN
+          AND MA_CHANDOAN = MA_CHANDOAN_IN
+          AND MA_BENH = MA_BENH_IN
+          AND MA_KHAM = MA_KHAM_IN;
+    ELSE
+        INSERT INTO TRIEUCHUNG
+        VALUES (TENTRIEUCHUNG_IN, MO_TA_IN, MUC_DO_IN, MA_CHANDOAN_IN, MA_BENH_IN, MA_KHAM_IN);
+    END IF;
+    COMMIT;
+END;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- TAO USER QUAN LY
-CREATE USER IF NOT EXISTS 'quanly'@'%' IDENTIFIED BY 'password';
+CREATE USER IF NOT EXISTS 'quanly'@'localhost' IDENTIFIED BY 'password';
 -- CAP QUYEN CHO QUAN LY
 GRANT EXECUTE ON PROCEDURE HOSPITAL.CAU1 TO 'quanly'@'localhost';
 GRANT EXECUTE ON PROCEDURE HOSPITAL.CAU2 TO 'quanly'@'localhost';
@@ -816,6 +1301,9 @@ GRANT EXECUTE ON PROCEDURE HOSPITAL.LIST_THUOC TO 'bacsy'@'localhost';
 GRANT EXECUTE ON PROCEDURE HOSPITAL.THEM_BENH TO 'bacsy'@'localhost';
 GRANT EXECUTE ON PROCEDURE HOSPITAL.THEM_THUOC TO 'bacsy'@'localhost';
 GRANT EXECUTE ON PROCEDURE HOSPITAL.BACSI_INFO TO 'bacsy'@'localhost';
+GRANT EXECUTE ON PROCEDURE HOSPITAL.XEM_XN_MABS TO 'bacsy'@'localhost';
+GRANT EXECUTE ON PROCEDURE HOSPITAL.XEM_PHIM_MAKHAM TO 'bacsy'@'localhost';
+GRANT EXECUTE ON PROCEDURE HOSPITAL.XEM_PHIM_MABS TO 'bacsy'@'localhost';
 
 
 REVOKE ALL PRIVILEGES ON `HOSPITAL`.* from 'quanly'@'localhost';
@@ -824,6 +1312,8 @@ show grants for 'quanly'@'localhost';
 
 -- CAP QUYEN CHO BENH NHAN
 GRANT EXECUTE ON PROCEDURE HOSPITAL.BN1 TO 'benhnhan'@'localhost';
+GRANT EXECUTE ON PROCEDURE HOSPITAL.BN1_BAOHIEM TO 'benhnhan'@'localhost';
+GRANT EXECUTE ON PROCEDURE HOSPITAL.BN1_NHANKHAU TO 'benhnhan'@'localhost';
 GRANT EXECUTE ON PROCEDURE HOSPITAL.BN2 TO 'benhnhan'@'localhost';
 GRANT EXECUTE ON PROCEDURE HOSPITAL.BN3 TO 'benhnhan'@'localhost';
 GRANT EXECUTE ON PROCEDURE HOSPITAL.BN4 TO 'benhnhan'@'localhost';
@@ -836,6 +1326,7 @@ GRANT EXECUTE ON PROCEDURE HOSPITAL.BN10 TO 'benhnhan'@'localhost';
 GRANT EXECUTE ON PROCEDURE HOSPITAL.BN_NHANKHAU_INFO TO 'benhnhan'@'localhost';
 GRANT EXECUTE ON PROCEDURE HOSPITAL.BN_BAOHIEM_INFO TO 'benhnhan'@'localhost';
 GRANT EXECUTE ON PROCEDURE HOSPITAL.CHECK_NOITRU TO 'benhnhan'@'localhost';
+GRANT EXECUTE ON PROCEDURE HOSPITAL.BENHNHAN_CAPNHAT TO 'benhnhan'@'localhost';
 
 -- trigger rang buoc
 DROP TRIGGER IF EXISTS KIEM_TRA_INSERT_NGAY_XUAT_VIEN;
@@ -890,10 +1381,6 @@ BEGIN
                           AND T.MA_BS = MABS);
 END$$
 DELIMITER ;
-select *
-from BENHNHAN
-         join NOITRU N on BENHNHAN.MA_BN = N.MA_BN
-where N.MA_BN
 
 
 DROP PROCEDURE IF EXISTS BS6;
@@ -925,32 +1412,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-call BS6('BNNOI1', 'BSMAT2');
 
-
-DROP PROCEDURE IF EXISTS XEM_THUOC;
-DELIMITER $$
-CREATE PROCEDURE XEM_THUOC(IN MAKHAM_IN VARCHAR(20))
-BEGIN
-    SELECT *
-    FROM THUOC T
-             JOIN CHEDOTHUOC C ON T.MA_THUOC = C.MA_THUOC
-    WHERE C.MA_KHAM = MAKHAM_IN;
-END$$
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS XEM_CDDD;
-DELIMITER $$
-CREATE PROCEDURE XEM_CDDD(IN MAKHAM_IN VARCHAR(20))
-BEGIN
-    SELECT *
-    FROM CDDD T
-             JOIN DINHDUONG C ON T.MA_CDDD = C.MA_CDDD
-    WHERE C.MA_KHAM = MAKHAM_IN;
-END$$
-DELIMITER ;
-
-CALL XEM_THUOC('NOI1');
 DROP VIEW IF EXISTS KHAMBENHGANNHAT;
 CREATE VIEW KHAMBENHGANNHAT AS
 SELECT DISTINCT MA_BN, KHAMBENH.MA_KHAM, HOVATEN, THOI_GIAN_KHAM
@@ -1007,6 +1469,7 @@ BEGIN
 END$$
 DELIMITER ;
 
+
 DROP PROCEDURE IF EXISTS XEM_CDDD;
 DELIMITER $$
 CREATE PROCEDURE XEM_CDDD(IN MAKHAM_IN VARCHAR(20))
@@ -1018,7 +1481,6 @@ BEGIN
 END$$
 DELIMITER ;
 
-CALL XEM_CDDD('NGOAI1');
 
 -- XEM XN THEO MA_KHAM
 DROP PROCEDURE IF EXISTS XEM_XN_MAKHAM;
@@ -1045,9 +1507,6 @@ BEGIN
                         WHERE MA_BS = MABS_IN);
 END$$
 DELIMITER ;
-SELECT *
-FROM KBNOITRU;
-CALL XEM_XN_MAKHAM('NGOAI2');
 
 -- XEM PHIM THEO MA_KHAM
 DROP PROCEDURE IF EXISTS XEM_PHIM_MAKHAM;
@@ -1070,9 +1529,6 @@ BEGIN
                       WHERE MA_BS = MABS_IN);
 END$$
 DELIMITER ;
-SELECT *
-FROM PHIM;
-CALL XEM_PHIM_MABS('BSMAT1');
 
 
 DROP PROCEDURE IF EXISTS XEM_XN_MAKHAM_MAXN;
@@ -1086,9 +1542,6 @@ BEGIN
       AND X.MA_XN = MAXN_IN;
 END$$
 DELIMITER ;
-
-call XEM_XN_MAKHAM_MAXN('NOI1', 'XNNG')
-call CAU1(1, '2020-12-23', 'khoa mắt')
 
 
 
