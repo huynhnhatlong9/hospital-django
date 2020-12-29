@@ -108,4 +108,22 @@ def benhnhanngoaitru_cangay(request, data):
         except Exception as e:
             raise e
 
+
+def xetnghiem_ngaykhoa(request,data):
+    with connections['manager'].cursor() as cursor:
+        try:
+            cursor.callproc('CAU11',
+                            [data['ngay'], data['khoa']])
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
+
+def xetnghiem_ngay(request,data):
+    with connections['manager'].cursor() as cursor:
+        try:
+            cursor.callproc('CAU12',
+                            [data['ngay']])
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
 # Create your models here.

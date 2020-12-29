@@ -8,13 +8,19 @@
 {% block content %}
     <div class="container">
         <div class="row p-lg-5">
-            <div class="col-lg-6 mb-lg-5 ">
-                <button class="btn btn-success w-50 p-4 float-right" data-toggle="modal" data-target="#modal-bacsi">Bác
-                    Sĩ
+            <div class="col-lg-4 mb-lg-5 ">
+                <button class="btn btn-success w-100 p-4 float-right" data-toggle="modal" data-target="#modal-bacsi">
+                    <h5><i class="fa fa-bar-chart"></i> Bác Sĩ</h5>
                 </button>
             </div>
-            <div class="col-lg-6 ">
-                <button class="btn btn-success w-50 p-4" data-toggle="modal" data-target="#modal-benhnhan">Bệnh Nhân
+            <div class="col-lg-4 ">
+                <button class="btn btn-success w-100 p-4" data-toggle="modal" data-target="#modal-benhnhan">
+                    <h5><i class="fa fa-bar-chart"></i> Bệnh Nhân</h5>
+                </button>
+            </div>
+            <div class="col-lg-4 ">
+                <button class="btn btn-success w-100 p-4" data-toggle="modal" data-target="#modal-xetnghiem">
+                    <h5><i class="fa fa-bar-chart"></i> Xét Nghiệm</h5>
                 </button>
             </div>
         </div>
@@ -133,6 +139,64 @@
         <!-- End Modal -->
         <!-- Modal -->
         <div class="modal fade" id="modal-thongkebenhnhan" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <fieldset class="border-bottom border-success w-100 mr-3">
+                            <legend class="text-success">
+                                <h5 class="d-inline ">Thống Kê Bác Sĩ</h5>
+                            </legend>
+                        </fieldset>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="modal-xetnghiem" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <fieldset class="border-bottom border-success w-100 mr-3">
+                            <legend class="text-success">
+                                <h5 class="d-inline ">Xem Xét Nghiệm</h5>
+                            </legend>
+                        </fieldset>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="date" class="form-control" placeholder="Ngày"
+                                   id="ngay">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Khoa"
+                                   id="khoa">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                        <button type="button" class="btn btn-success" id="submit">Thêm</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="modal-thongkexetnghiem" tabindex="-1" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">

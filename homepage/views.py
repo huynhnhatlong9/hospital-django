@@ -171,7 +171,7 @@ def homeView(request):
                 return res
             if request.POST['type'] == 'thongkebenhnhan':
                 data = json.loads(request.POST['data'])
-                if data['ca']!="" and data['ngay']!="" and data['khoa']!="" and data['noingoai']=='Cả Hai':
+                if data['ca'] != "" and data['ngay'] != "" and data['khoa'] != "" and data['noingoai'] == 'Cả Hai':
                     try:
                         info = manager_model.benhnhanall_cangaykhoa(request, data)
                         res = JsonResponse({'data': info})
@@ -181,7 +181,7 @@ def homeView(request):
                         res = JsonResponse({'error': str(e)})
                         res.status_code = 403
                         return res
-                if data['ca']!="" and data['ngay']!="" and data['khoa']!="" and data['noingoai']=='Nội Trú':
+                if data['ca'] != "" and data['ngay'] != "" and data['khoa'] != "" and data['noingoai'] == 'Nội Trú':
                     try:
                         info = manager_model.benhnhannoitru_cangaykhoa(request, data)
                         res = JsonResponse({'data': info})
@@ -191,7 +191,7 @@ def homeView(request):
                         res = JsonResponse({'error': str(e)})
                         res.status_code = 403
                         return res
-                if data['ca']!="" and data['ngay']!="" and data['khoa']!="" and data['noingoai']=='Ngoại Trú':
+                if data['ca'] != "" and data['ngay'] != "" and data['khoa'] != "" and data['noingoai'] == 'Ngoại Trú':
                     try:
                         info = manager_model.benhnhanngoaitru_cangaykhoa(request, data)
                         res = JsonResponse({'data': info})
@@ -201,7 +201,7 @@ def homeView(request):
                         res = JsonResponse({'error': str(e)})
                         res.status_code = 403
                         return res
-                if data['ca']!="" and data['ngay']!="" and data['khoa']=="" and data['noingoai']=='Nội Trú':
+                if data['ca'] != "" and data['ngay'] != "" and data['khoa'] == "" and data['noingoai'] == 'Nội Trú':
                     try:
                         info = manager_model.benhnhannoitru_cangay(request, data)
                         res = JsonResponse({'data': info})
@@ -211,9 +211,34 @@ def homeView(request):
                         res = JsonResponse({'error': str(e)})
                         res.status_code = 403
                         return res
-                if data['ca']!="" and data['ngay']!="" and data['khoa']=="" and data['noingoai']=='Ngoại Trú':
+                if data['ca'] != "" and data['ngay'] != "" and data['khoa'] == "" and data['noingoai'] == 'Ngoại Trú':
                     try:
                         info = manager_model.benhnhanngoaitru_cangay(request, data)
+                        res = JsonResponse({'data': info})
+                        res.status_code = 200
+                        return res
+                    except Exception as e:
+                        res = JsonResponse({'error': str(e)})
+                        res.status_code = 403
+                        return res
+                res = JsonResponse({'error': 'Điền Đúng Yêu Cầu!'})
+                res.status_code = 403
+                return res
+            if request.POST['type'] == 'thongkexetnghiem':
+                data = json.loads(request.POST['data'])
+                if data['ngay'] != "" and data['khoa'] != "":
+                    try:
+                        info = manager_model.xetnghiem_ngaykhoa(request, data)
+                        res = JsonResponse({'data': info})
+                        res.status_code = 200
+                        return res
+                    except Exception as e:
+                        res = JsonResponse({'error': str(e)})
+                        res.status_code = 403
+                        return res
+                if data['ngay'] != "" and data['khoa'] == "":
+                    try:
+                        info = manager_model.xetnghiem_ngay(request, data)
                         res = JsonResponse({'data': info})
                         res.status_code = 200
                         return res

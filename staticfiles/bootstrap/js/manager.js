@@ -105,3 +105,56 @@ $('#modal-benhnhan #submit').on('click', function (e) {
         );
     }
 })
+
+
+
+
+$('#modal-xetnghiem #submit').on('click', function (e) {
+    data = {
+        ngay: $('#modal-xetnghiem #ngay').val(),
+        khoa: $('#modal-xetnghiem #khoa').val(),
+    };
+    let check = true
+    if (check) {
+        $.ajax({
+                url: "",
+                type: 'post',
+                data: {
+                    data: JSON.stringify(data),
+                    type: 'thongkexetnghiem'
+                },
+                success: function (response) {
+                    let innerContent = ""
+                    for (i of response.data) {
+                        innerContent += (`<tr>
+                        <td scope="row">${i[0]}</td>
+                        <td scope="row">${i[1]}</td>
+                        <td scope="row">${i[2]}</td>
+                    </tr>`)
+                    }
+                    $('#modal-thongkexetnghiem .modal-body').html("");
+                    $('#modal-thongkexetnghiem .modal-body').html(`
+                <table class="table table-{1:striped|sm|bordered|hover|inverse} table-inverse table-bordered">
+                <thead class="thead-inverse|thead-default table-bordered table-primary">
+                <tr>
+                    <th>Mã Xét Nghiệm</th>
+                    <th>Tên Khoa</th>
+                    <th>Thời Gian Xét Nghiệm</th>
+                </tr>
+                </thead>
+                <tbody>
+                ${innerContent}
+                </tbody>
+                </table>
+                `)
+                    $('#modal-xetnghiem').modal('hide');
+                    $('#modal-thongkexetnghiem').modal()
+                },
+                error: function (data) {
+                    toastr.error(data.responseJSON.error);
+                }
+            },
+        );
+    }
+})
+
