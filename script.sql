@@ -589,6 +589,17 @@ from (((((`HOSPITAL`.`XN` join `HOSPITAL`.`KHAMBENH` `K` on ((`HOSPITAL`.`XN`.`M
          join `HOSPITAL`.`KHOADIEUTRI` `K3` on ((`N`.`MA_KHOA` = `K3`.`MA_KHOA`)));
 
 create
+    definer = longhuynh@localhost procedure BACSI_INFO(IN MABS_IN varchar(20))
+BEGIN
+    select MA_BS, concat(HO, ' ', TEN) as TEN, TEN_KHOA, CHUYEN_KHOA, LUONG, CA_LAM_VIEC, EXPYEAR
+    from BACSY
+             join NHANVIEN N
+                  on N.MA_NV = BACSY.MA_BS
+             join KHOADIEUTRI K on K.MA_KHOA = N.MA_KHOA
+    where MA_BS = MABS_IN;
+END;
+
+create
     definer = longhuynh@localhost procedure BENHNHAN_CAPNHAT(IN MABN_IN varchar(20), IN HO_IN varchar(20),
                                                              IN TEN_IN varchar(20), IN TUOI_IN int,
                                                              IN DAN_TOC_IN varchar(20), IN NGHE_NGHIEP_IN varchar(30),
@@ -824,6 +835,23 @@ BEGIN
              JOIN KQCHANDOAN K on DINHDUONG.MA_CHANDOAN = K.MA_CHANDOAN and DINHDUONG.MA_BENH = K.MA_BENH and
                                   DINHDUONG.MA_KHAM = K.MA_KHAM
              JOIN KHAMBENHGANNHAT K2 on DINHDUONG.MA_KHAM = K2.MA_KHAM AND MA_BN = MABN;
+END;
+
+create
+    definer = longhuynh@localhost procedure BN_BAOHIEM_INFO(IN MABN varchar(20))
+BEGIN
+    select MA_THE, THOI_HAN, NOI_DANG_KY
+    from BHYT
+             join BENHNHAN B on B.BHYT = BHYT.MA_THE
+    where B.MA_BN = MABN;
+END;
+
+create
+    definer = longhuynh@localhost procedure BN_NHANKHAU_INFO(IN MABN varchar(20))
+BEGIN
+    select MA_BN, concat(HO, ' ', TEN) as TEN, TUOI, DAN_TOC, NGHE_NGHIEP
+    from BENHNHAN
+    where MA_BN = MABN;
 END;
 
 create
@@ -1083,6 +1111,15 @@ BEGIN
 END;
 
 create
+    definer = longhuynh@localhost procedure CHECK_NOITRU(IN MABN varchar(20))
+BEGIN
+    select *
+    from BENHNHAN
+             join NOITRU N on BENHNHAN.MA_BN = N.MA_BN
+    where N.MA_BN = MABN;
+END;
+
+create
     definer = longhuynh@localhost procedure CHINHSUA_BANT_NV(IN THOIGIANNHAPVIEN_IN datetime, IN MA_KHOA_IN varchar(20),
                                                              IN MA_BS_IN varchar(20), IN MA_BN_IN varchar(20),
                                                              IN SO_GIUONG_IN int, IN SO_BUONG_IN int)
@@ -1287,6 +1324,37 @@ BEGIN
 END;
 
 create
+    definer = longhuynh@localhost procedure LIST_BENH()
+BEGIN
+    SELECT *
+    FROM BENH;
+END;
+
+create
+    definer = longhuynh@localhost procedure LIST_THUOC()
+BEGIN
+    SELECT *
+    FROM THUOC;
+END;
+
+create
+    definer = longhuynh@localhost procedure QL_INFO(IN MAQL varchar(20))
+BEGIN
+    select BS_QUANLY.MA_QL, concat(HO, ' ', TEN) as TEN, NAM_QUAN_LY, LUONG, TEN_KHOA, CA_LAM_VIEC
+    from BS_QUANLY
+             join NHANVIEN N on BS_QUANLY.MA_QL = N.MA_NV
+             join KHOADIEUTRI K on K.MA_KHOA = N.MA_KHOA
+    where BS_QUANLY.MA_QL = MAQL;
+END;
+
+create
+    definer = longhuynh@localhost procedure THEM_BENH(IN MABENH_IN varchar(20), IN TENBENH_IN varchar(20),
+                                                      IN MOTA_IN varchar(100))
+BEGIN
+    insert into BENH values (MABENH_IN, TENBENH_IN, MOTA_IN);
+END;
+
+create
     definer = longhuynh@localhost procedure THEM_BENHNHAN_NGOAITRU(IN MAKHAM_IN varchar(20), IN TGKHAM_IN datetime,
                                                                    IN CAKHAM_IN int, IN MABN_IN varchar(20),
                                                                    IN MABS_IN varchar(20))
@@ -1393,6 +1461,13 @@ BEGIN
         VALUES (MA_CHANDOAN_IN, MA_BENH_IN, MA_KHAM_IN, MA_THUOC_IN, LIEU_DUNG_IN, THOI_GIAN_DUNG_IN);
     END IF;
     COMMIT;
+END;
+
+create
+    definer = longhuynh@localhost procedure THEM_THUOC(IN MATHUOC_IN varchar(20), IN TENTHUOC_IN varchar(30),
+                                                       IN LOAITHUOC_IN varchar(30))
+BEGIN
+    insert into THUOC values (MATHUOC_IN, TENTHUOC_IN, LOAITHUOC_IN);
 END;
 
 create

@@ -17,21 +17,21 @@ from manager import models as manager_model
 # Create your views here.
 def check_ssn(ssn, user_type):
     if user_type == 0:
-        with connections['patient'].cursor() as cursor:
+        with connections['myuser'].cursor() as cursor:
             cursor.execute("Select MA_BN from BENHNHAN")
             a = cursor.fetchall()
             if ssn not in [x[0] for x in a]:
                 return False
         return True
     if user_type == 1:
-        with connections['doctor'].cursor() as cursor:
+        with connections['myuser'].cursor() as cursor:
             cursor.execute("Select MA_BS from BACSY")
             a = cursor.fetchall()
             if ssn not in [x[0] for x in a]:
                 return False
         return True
     if user_type == 2:
-        with connections['manager'].cursor() as cursor:
+        with connections['myuser'].cursor() as cursor:
             cursor.execute("Select MA_QL from BS_QUANLY")
             a = cursor.fetchall()
             if ssn not in [x[0] for x in a]:

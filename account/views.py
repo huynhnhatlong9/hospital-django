@@ -38,6 +38,7 @@ def profile(request):
         info, baohiem, loaibenhnhan = patient_model.get_patient_info(request.user.ssn)
         return render(request, 'homepage/PatientProfile.html',
                       {'info': info, 'baohiem': baohiem, 'loaibenhnhan': loaibenhnhan})
+
     elif request.user.isDoctor:
         info = doctor_model.get_doctor_info(request.user.ssn)
         return render(request, 'homepage/DoctorProfile.html', {'info': info})

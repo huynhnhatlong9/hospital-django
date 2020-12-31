@@ -84,6 +84,14 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '',
     },
+    'myuser': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'HOSPITAL',
+        'USER': 'longhuynh',
+        'PASSWORD': 'Long3007',
+        'HOST': 'localhost',
+        'PORT': '',
+    },
     'patient': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'HOSPITAL',
@@ -158,4 +166,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '')
 MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'account.Account'
 LOGIN_URL = '/login/'
-JS_REVERSE_OUTPUT_PATH=os.path.join(BASE_DIR, 'staticfiles/')
+JS_REVERSE_OUTPUT_PATH = os.path.join(BASE_DIR, 'staticfiles/')

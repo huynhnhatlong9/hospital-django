@@ -221,7 +221,6 @@ BEGIN
 END$$
 DELIMITER ;
 
-
 -- ------- --
 -- BAC SI  --
 -- ------- --
@@ -581,36 +580,6 @@ ORDER BY THOI_GIAN_KHAM DESC;
 
 -- CAU 1
 -- (ii.1) CAP NHAT THONG TIN NHAN KHAU HOC VA THONG TIN BAO HIEM Y TE
-DROP PROCEDURE IF EXISTS BN1;
-DELIMITER $$
-CREATE PROCEDURE BN1(IN MABN VARCHAR(20),
-                     IN HO NVARCHAR(20),
-                     IN TEN NVARCHAR(20),
-                     IN TUOI INT,
-                     IN DAN_TOC NVARCHAR(20),
-                     IN NGHE_NGHIEP NVARCHAR(30),
-                     IN MA_THE VARCHAR(20),
-                     IN THOI_HAN DATE,
-                     IN NOI_DANG_KY NVARCHAR(30))
-BEGIN
-    UPDATE BENHNHAN B
-    SET B.HO          = IFNULL(NULL, HO),
-        B.TEN         = IFNULL(NULL, TEN),
-        B.TUOI        = IFNULL(NULL, TUOI),
-        B.DAN_TOC     = IFNULL(NULL, DAN_TOC),
-        B.NGHE_NGHIEP = IFNULL(NULL, NGHE_NGHIEP)
-    WHERE MA_BN = MABN;
-
-    UPDATE BHYT B
-    SET B.MA_THE      = MA_THE,
-        B.THOI_HAN    = IFNULL(NULL, THOI_HAN),
-        B.NOI_DANG_KY = IFNULL(NULL, NOI_DANG_KY)
-    WHERE B.BN = MABN;
-END$$
-DELIMITER ;
-
-CALL BN1('123', NULL, NULL, NULL, NULL, NULL, '456', NULL, NULL);
-
 
 -- CAU 2
 -- (iii.2). Xem danh sách các thuốc mà mình đã dùng trong lần điều trị gần nhất.
